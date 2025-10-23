@@ -21,9 +21,14 @@ export interface ChatMessage {
   isUser: boolean;
   timestamp: Date;
   metadata?: {
-    type?: 'roadmap' | 'summary' | 'task-creation' | 'general';
+    type?: 'roadmap' | 'summary' | 'task-creation' | 'general' | 'error';
     relatedTaskIds?: string[];
     data?: any;
+    // Backend response metadata
+    isBackendResponse?: boolean;
+    confidence?: number;
+    intents?: any[];
+    retrievedDocs?: any[];
   };
 }
 
