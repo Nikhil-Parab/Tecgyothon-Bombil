@@ -1,0 +1,5 @@
+# Ignore environment variables
+.env
+
+# Ignore merged JSON data
+merged_data.json

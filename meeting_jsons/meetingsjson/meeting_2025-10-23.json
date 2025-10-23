@@ -1,0 +1,20 @@
+[
+  {
+    "id": "meeting-001",
+    "content": "Team discussed Q4 goals and decided to allocate 20% more budget to AI product development.",
+    "metadata": {
+      "date": "2025-10-23",
+      "department": "Management",
+      "type": "budget_meeting"
+    }
+  },
+  {
+    "id": "meeting-002",
+    "content": "Development team completed phase 1 of chatbot project. Next phase focuses on feedback loop and UI improvement.",
+    "metadata": {
+      "date": "2025-10-23",
+      "department": "Engineering",
+      "type": "project_update"
+    }
+  }
+]
