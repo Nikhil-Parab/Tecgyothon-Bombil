@@ -1,0 +1,20 @@
+[
+    {
+        "id": "meeting-009",
+        "content": "Team discussed Q1 roadmap and key deliverables. Decided to focus on improving API performance and enhancing security protocols.",
+        "metadata": {
+            "date": "2025-10-26",
+            "department": "Engineering",
+            "type": "roadmap_meeting"
+        }
+    },
+    {
+        "id": "meeting-010",
+        "content": "Marketing reviewed upcoming campaigns and decided to launch a new social media strategy focusing on LinkedIn and Twitter.",
+        "metadata": {
+            "date": "2025-10-26",
+            "department": "Marketing",
+            "type": "campaign_meeting"
+        }
+    }
+]

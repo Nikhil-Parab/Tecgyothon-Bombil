@@ -1,0 +1,29 @@
+[
+  {
+    "id": "meeting-003",
+    "content": "Marketing team reviewed Q4 campaign performance. Decided to increase social media ad spend by 15% and launch a new influencer partnership program.",
+    "metadata": {
+      "date": "2025-10-24",
+      "department": "Marketing",
+      "type": "campaign_meeting"
+    }
+  },
+  {
+    "id": "meeting-004",
+    "content": "Engineering team discussed chatbot API integration. Assigned Alice to implement the feedback loop and Bob to optimize response times.",
+    "metadata": {
+      "date": "2025-10-24",
+      "department": "Engineering",
+      "type": "project_update"
+    }
+  },
+  {
+    "id": "meeting-005",
+    "content": "HR reviewed employee onboarding process. Decided to implement a new mentorship program and update orientation materials.",
+    "metadata": {
+      "date": "2025-10-24",
+      "department": "HR",
+      "type": "internal_meeting"
+    }
+  }
+]
