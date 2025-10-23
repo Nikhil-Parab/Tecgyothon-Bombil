@@ -1,0 +1,190 @@
+{
+    "slack": [
+        {
+            "source": "Slack",
+            "channel_id": "C09NZHCCPG8",
+            "user": "Omdeep Borkar",
+            "timestamp": "2025-10-23T09:56:39.718239+00:00",
+            "text": "yooooooo"
+        },
+        {
+            "source": "Slack",
+            "channel_id": "C09NZHCCPG8",
+            "user": "Omdeep Borkar",
+            "timestamp": "2025-10-23T09:55:57.993909+00:00",
+            "text": "w in the chat"
+        },
+        {
+            "source": "Slack",
+            "channel_id": "C09NZHCCPG8",
+            "user": "Omdeep Borkar",
+            "timestamp": "2025-10-23T09:55:54.786749+00:00",
+            "text": "boiiii reeee"
+        },
+        {
+            "source": "Slack",
+            "channel_id": "C09NZHCCPG8",
+            "user": "Omdeep Borkar",
+            "timestamp": "2025-10-23T09:55:04.356419+00:00",
+            "text": "yoooooooooooooom"
+        },
+        {
+            "source": "Slack",
+            "channel_id": "C09NZHCCPG8",
+            "user": "Omdeep Borkar",
+            "timestamp": "2025-10-23T09:43:09.464509+00:00",
+            "text": "hiii wheres the filesssss"
+        },
+        {
+            "source": "Slack",
+            "channel_id": "C09NZHCCPG8",
+            "user": "Omdeep Borkar",
+            "timestamp": "2025-10-23T09:41:39.550809+00:00",
+            "text": "i want the assignment by 6 pm"
+        },
+        {
+            "source": "Slack",
+            "channel_id": "C09NZHCCPG8",
+            "user": "Omdeep Borkar",
+            "timestamp": "2025-10-23T09:22:53.340609+00:00",
+            "text": "bareee"
+        },
+        {
+            "source": "Slack",
+            "channel_id": "C09NZHCCPG8",
+            "user": "Nischay Mandrekar",
+            "timestamp": "2025-10-23T09:22:20.538949+00:00",
+            "text": "bare ulai re kamache kite"
+        },
+        {
+            "source": "Slack",
+            "channel_id": "C09NZHCCPG8",
+            "user": "Omdeep Borkar",
+            "timestamp": "2025-10-23T09:22:11.398829+00:00",
+            "text": "hiiii nibaaaa"
+        },
+        {
+            "source": "Slack",
+            "channel_id": "C09NZHCCPG8",
+            "user": "Omdeep Borkar",
+            "timestamp": "2025-10-23T09:21:06.907529+00:00",
+            "text": "has joined the channel"
+        },
+        {
+            "source": "Slack",
+            "channel_id": "C09MYGLPA3D",
+            "user": "Nischay Mandrekar",
+            "timestamp": "2025-10-23T09:42:07.744969+00:00",
+            "text": "bare re"
+        },
+        {
+            "source": "Slack",
+            "channel_id": "C09MYGLPA3D",
+            "user": "Omdeep Borkar",
+            "timestamp": "2025-10-23T09:41:59.069289+00:00",
+            "text": "hiii guys weicome to bombilll"
+        }
+    ],
+    "github": [
+        {
+            "source": "GitHub",
+            "user": "kp5244569-del",
+            "timestamp": "2025-10-23T17:21:11Z",
+            "title": "> Issue type",
+            "text": "> Issue type > > Bug > > Have you reproduced the bug with TensorFlow Nightly? > > Yes > > Source > > binary > > TensorFlow version > > 2.9 > > Custom code > > Yes > > OS platform and distribution > > Linux Debian 11 > > Mobile device > > _No response_ > > Python version > > 3.9 > > Bazel version > > _No response_ > > GCC/compiler version > > _No response_ > > CUDA/cuDNN version > > _No response_ > > GPU model and memory > > _No response_ > > Current behavior? > > Result of tf.ones([10], dtype=tf.float32)/tf.ones([10], dtype=tf.float32) should be all 1.0, but was [0.99999994 0.99999994 0.99999994 0.99999994 0.99999994 0.99999994 > 0.99999994 0.99999994 1. 1. ] in graph mode. > > Tensorflow versions before 2.9 don't have this problem, starting from 2.9 this problem ocurrs whether I enable or disable oneDNN. > > Regarding CPU, this problem occurs on Intel 8336C, AMD 9Y24, but not on Apple M4. > > Also, using Eigen's cwiseQuotient gives accurate result, whether avx2 or avx512f is used. > > Standalone code to reproduce the issue > > shell > import os > > os.environ[\"TF_ENABLE_ONEDNN_OPTS\"] = \"0\" > > import tensorflow as tf > > > @tf.function > def reverse(x): > return 1.0 / x > > > ones = tf.ones([10], dtype=tf.float32) > print(\"graph:\", reverse(ones)) > tf.config.run_functions_eagerly(True) > print(\"eager:\", reverse(ones)) > print(\"version:\", tf.version.GIT_VERSION, tf.version.VERSION) > > > Relevant log output > > shell > graph: tf.Tensor( > [0.99999994 0.99999994 0.99999994 0.99999994 0.99999994 0.99999994 > 0.99999994 0.99999994 1. 1. ], shape=(10,), dtype=float32) > eager: tf.Tensor([1. 1. 1. 1. 1. 1. 1. 1. 1. 1.], shape=(10,), dtype=float32) > version: v1.12.1-132116-gf67cb87691d 2.21.0-dev20251017 > _Originally posted by @kp5244569-del in https://github.com/tensorflow/tensorflow/issues/102771issuecomment-3438075784_"
+        },
+        {
+            "source": "GitHub",
+            "user": "grow1n",
+            "timestamp": "2025-10-23T12:20:13Z",
+            "title": "Division Precision Problem in Graph Mode on Intel CPU",
+            "text": "Issue type Bug Have you reproduced the bug with TensorFlow Nightly? Yes Source binary TensorFlow version 2.9 Custom code Yes OS platform and distribution Linux Debian 11 Mobile device _No response_ Python version 3.9 Bazel version _No response_ GCC/compiler version _No response_ CUDA/cuDNN version _No response_ GPU model and memory _No response_ Current behavior? Result of tf.ones([10], dtype=tf.float32)/tf.ones([10], dtype=tf.float32) should be all 1.0, but was [0.99999994 0.99999994 0.99999994 0.99999994 0.99999994 0.99999994 0.99999994 0.99999994 1. 1. ] in graph mode. Tensorflow versions before 2.9 don't have this problem, starting from 2.9 this problem ocurrs whether I enable or disable oneDNN. Regarding CPU, this problem occurs on Intel 8336C, AMD 9Y24, but not on Apple M4. Also, using Eigen's cwiseQuotient gives accurate result, whether avx2 or avx512f is used. Standalone code to reproduce the issue shell import os os.environ[\"TF_ENABLE_ONEDNN_OPTS\"] = \"0\" import tensorflow as tf @tf.function def reverse(x): return 1.0 / x ones = tf.ones([10], dtype=tf.float32) print(\"graph:\", reverse(ones)) tf.config.run_functions_eagerly(True) print(\"eager:\", reverse(ones)) print(\"version:\", tf.version.GIT_VERSION, tf.version.VERSION) Relevant log output shell graph: tf.Tensor( [0.99999994 0.99999994 0.99999994 0.99999994 0.99999994 0.99999994 0.99999994 0.99999994 1. 1. ], shape=(10,), dtype=float32) eager: tf.Tensor([1. 1. 1. 1. 1. 1. 1. 1. 1. 1.], shape=(10,), dtype=float32) version: v1.12.1-132116-gf67cb87691d 2.21.0-dev20251017"
+        },
+        {
+            "source": "GitHub",
+            "user": "kp5244569-del",
+            "timestamp": "2025-10-23T16:51:20Z",
+            "title": "Comment on #102771",
+            "text": "> Issue type > > Bug > > Have you reproduced the bug with TensorFlow Nightly? > > Yes > > Source > > binary > > TensorFlow version > > 2.9 > > Custom code > > Yes > > OS platform and distribution > > Linux Debian 11 > > Mobile device > > _No response_ > > Python version > > 3.9 > > Bazel version > > _No response_ > > GCC/compiler version > > _No response_ > > CUDA/cuDNN version > > _No response_ > > GPU model and memory > > _No response_ > > Current behavior? > > Result of tf.ones([10], dtype=tf.float32)/tf.ones([10], dtype=tf.float32) should be all 1.0, but was [0.99999994 0.99999994 0.99999994 0.99999994 0.99999994 0.99999994 > 0.99999994 0.99999994 1. 1. ] in graph mode. > > Tensorflow versions before 2.9 don't have this problem, starting from 2.9 this problem ocurrs whether I enable or disable oneDNN. > > Regarding CPU, this problem occurs on Intel 8336C, AMD 9Y24, but not on Apple M4. > > Also, using Eigen's cwiseQuotient gives accurate result, whether avx2 or avx512f is used. > > Standalone code to reproduce the issue > > shell > import os > > os.environ[\"TF_ENABLE_ONEDNN_OPTS\"] = \"0\" > > import tensorflow as tf > > > @tf.function > def reverse(x): > return 1.0 / x > > > ones = tf.ones([10], dtype=tf.float32) > print(\"graph:\", reverse(ones)) > tf.config.run_functions_eagerly(True) > print(\"eager:\", reverse(ones)) > print(\"version:\", tf.version.GIT_VERSION, tf.version.VERSION) > > > Relevant log output > > shell > graph: tf.Tensor( > [0.99999994 0.99999994 0.99999994 0.99999994 0.99999994 0.99999994 > 0.99999994 0.99999994 1. 1. ], shape=(10,), dtype=float32) > eager: tf.Tensor([1. 1. 1. 1. 1. 1. 1. 1. 1. 1.], shape=(10,), dtype=float32) > version: v1.12.1-132116-gf67cb87691d 2.21.0-dev20251017 >"
+        },
+        {
+            "source": "GitHub",
+            "user": "Abelarm",
+            "timestamp": "2025-10-22T19:50:52Z",
+            "title": "Incopatible version of tensorflow==2.14 with numpy>2",
+            "text": "Issue type Build/Install Have you reproduced the bug with TensorFlow Nightly? No Source binary TensorFlow version 2.14 Custom code No OS platform and distribution all of them Mobile device _No response_ Python version 3.10, 3.11 Bazel version _No response_ GCC/compiler version _No response_ CUDA/cuDNN version _No response_ GPU model and memory _No response_ Current behavior? My project's dependency resolved a combination of numpy and tensorflow that are incompatible. (2.14, >2.) By reading the logs (probably) should be because tensorflow was built with numpy v1 while I am installing the v2. But my question is why this resolution was valid in the first place? Shouldn't be some constraints on the version of numpy if I install the version 2.14 of tensorflow? Standalone code to reproduce the issue shell pip install tensorflow==2.14.0 numpy==2.3.4 and then just import tensorflow python import tensorflow as tf print(tf.__version__) Relevant log output shell A module that was compiled using NumPy 1.x cannot be run in NumPy 2.3.4 as it may crash. To support both 1.x and 2.x versions of NumPy, modules must be compiled with NumPy 2.0. Some module may need to rebuild instead e.g. with 'pybind11>=2.12'. If you are a user of the module, the easiest solution will be to downgrade to 'numpy<2' or try to upgrade the affected module. We expect that some modules will need time to support NumPy 2. ... _np_bfloat16 = pywrap_ml_dtypes.bfloat16() ^^^^^^^^^^^^^^^^^^^^^^^^^^^ TypeError: Unable to convert function return value to a Python type! The signature was () -> handle"
+        }
+    ],
+    "gmail": [
+        {
+            "source": "Gmail",
+            "from": "GitHub <noreply@github.com>",
+            "subject": "[GitHub] Sudo email verification code",
+            "body": "Hey, NischayMandrekar! Here is your GitHub sudo authentication code: 64167177 This code is valid for 15 minutes and can only be used once. Please don't share this code with anyone: we'll never ask for it on the phone or via email. Thanks, The GitHub Team",
+            "date": "Thu, 23 Oct 2025 08:07:39 -0700"
+        },
+        {
+            "source": "Gmail",
+            "from": "Google <no-reply@accounts.google.com>",
+            "subject": "2-Step Verification turned on",
+            "body": "[image: Google] 2-Step Verification turned on mandrekarnischay91@gmail.com Your Google Account mandrekarnischay91@gmail.com is now protected with 2-Step Verification. When you sign in on a new or untrusted device, you’ll need your second factor to verify your identity. *Don't get locked out!* You can add a backup phone or get backup codes to use when you don’t have your second factor with you. You can review your 2SV settings < to make changes. You can also see security activity at You received this email to let you know about important changes to your Google Account and services. © 2025 Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA",
+            "date": "Thu, 23 Oct 2025 15:21:25 GMT"
+        },
+        {
+            "source": "Gmail",
+            "from": "Google <no-reply@accounts.google.com>",
+            "subject": "2-Step Verification turned off",
+            "body": "[image: Google] 2-Step Verification turned off mandrekarnischay91@gmail.com Your Google Account is no longer protected with 2-Step Verification. You don’t need your second factor to sign in. Check activity < You can also see security activity at You received this email to let you know about important changes to your Google Account and services. © 2025 Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA",
+            "date": "Thu, 23 Oct 2025 15:23:54 GMT"
+        },
+        {
+            "source": "Gmail",
+            "from": "Team Snapchat <no_reply@snapchat.com>",
+            "subject": "View your Snapchat messages!",
+            "body": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \" <html xmlns=\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\"> <head> <title>Snap</title> <meta content=\"text/html; charset=utf-8\" /> <meta content=\"IE=edge\" /> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0 \" /> <meta name=\"format-detection\" content=\"telephone=no address=no\" /> <meta name=\"color-scheme\" content=\"light dark\"> <meta name=\"supported-color-schemes\" content=\"light dark\"> <style type=\"text/css\"> body { margin: 0 auto; padding: 0; -webkit-text-size-adjust: 100% !important; -ms-text-size-adjust: 100% !important; -webkit-font-smoothing: antialiased !important; } img { border: 0 !important; outline: none !important; } p { Margin: 0px !important; Padding: 0px !important; } table { border-collapse: collapse; mso-table-lspace: 0px; mso-table-rspace: 0px; } .addressLink { text-decoration: none !important; } td, a, span { border-collapse: collapse; mso-lin",
+            "date": "Thu, 23 Oct 2025 15:24:46 +0000 (UTC)"
+        },
+        {
+            "source": "Gmail",
+            "from": "Google <no-reply@accounts.google.com>",
+            "subject": "2-Step Verification turned on",
+            "body": "[image: Google] 2-Step Verification turned on mandrekarnischay91@gmail.com Your Google Account mandrekarnischay91@gmail.com is now protected with 2-Step Verification. When you sign in on a new or untrusted device, you’ll need your second factor to verify your identity. *Don't get locked out!* You can add a backup phone or get backup codes to use when you don’t have your second factor with you. You can review your 2SV settings < to make changes. You can also see security activity at You received this email to let you know about important changes to your Google Account and services. © 2025 Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA",
+            "date": "Thu, 23 Oct 2025 15:59:38 GMT"
+        },
+        {
+            "source": "Gmail",
+            "from": "Google <no-reply@accounts.google.com>",
+            "subject": "Security alert",
+            "body": "[image: Google] New passkey added to your account mandrekarnischay91@gmail.com If you didn’t add a passkey, someone might be using your account. Check and secure your account now. Check activity < You can also see security activity at You received this email to let you know about important changes to your Google Account and services. © 2025 Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA",
+            "date": "Thu, 23 Oct 2025 16:01:19 GMT"
+        },
+        {
+            "source": "Gmail",
+            "from": "\"Tactiq Welcome Emails\" <welcome@tactiq.io>",
+            "subject": "Welcome to Tactiq, Nischay 💖!",
+            "body": "**Ensure every meeting delivers outcomes** ------------------------------------------ With Tactiq you can be the professional who always delivers, with full context preserved and every commitment executed flawlessly. \"Tactiq is extremely helpful in creating transcripts and getting AI based summaries. **Highly recommend if you want to have outcome driven meetings**.\" **Get started in 3 steps ** --------------------------- **1. Visit Tactiq's Set Up page to start first meeting** -------------------------------------------------------- Experience real time transcription with no awkward bots joining and no screen recordings. If you haven't given Tactiq the required permissions you will be prompted in Tactiq's set up page. [ Go to set up page]( **2. Watch the magic happen automatically** ------------------------------------------- Three people talking over each other about deadlines, blockers, and random ideas. Tactiq understands the chaos and extracts what actually matters—with the full \"w",
+            "date": "Thu, 23 Oct 2025 16:16:13 +0000"
+        },
+        {
+            "source": "Gmail",
+            "from": "LinkedIn <messages-noreply@linkedin.com>",
+            "subject": "💬 Add Rajat Gosavi",
+            "body": "Do you know Rajat Gosavi? Yes, connect: More people you may know Siyani Naik Computer engineering undergraduate at Goa College of Engineering, Farmagudi, Goa Poonam Holkar -- Aganivesh Ogale Assistant Professor in Mechanical Engineering Ekta Prabhu Velguenkar student at Goa Engineering College - Government of Goa ECE-27 Nadish Haldankar Attended Goa Engineering College - Government of Goa See more people you might know: ---------------------------------------- This email was intended for Nischay Mandrekar (Attended Goa Engineering College - Government of Goa) Learn why we included this: You are receiving People You May Know notification emails. Unsubscribe: Help: © 2025 LinkedIn Corporation, 1zwnj000 West Maude Avenue, Sunnyvale, CA 94085. LinkedIn and the LinkedIn logo are registered trademarks of LinkedIn.",
+            "date": "Thu, 23 Oct 2025 16:18:00 +0000 (UTC)"
+        },
+        {
+            "source": "Gmail",
+            "from": "Google <no-reply@accounts.google.com>",
+            "subject": "Security alert",
+            "body": "[image: Google] App password created to sign in to your account mandrekarnischay91@gmail.com If you didn't generate this password for Gmail, someone might be using your account. Check and secure your account now. Check activity < You can also see security activity at You received this email to let you know about important changes to your Google Account and services. © 2025 Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA",
+            "date": "Thu, 23 Oct 2025 16:23:04 GMT"
+        },
+        {
+            "source": "Gmail",
+            "from": "Internshala <student@updates.internshala.com>",
+            "subject": "Update: Nischay, Last Day to Join Tata Crucible",
+            "body": "<!DOCTYPE html> <html><head><title></title><meta charset=\"utf-8\" content=\"text/html\" content=\"noindex, nofollow, noarchive\" name=\"robots\"/><meta content=\"noindex, nofollow, noarchive\" name=\"googlebot\"/></head><body aria-disabled=\"false\" aria-label=\"To enrich screen reader interactions, please activate Accessibility in Grammarly extension settings\" data-gr-ext-installed=\"\" data-new-gr-c-s-check-loaded=\"14.1254.0\" data-new-gr-c-s-loaded=\"14.1254.0\"><div style=\"display:none\">Win iPhone 17, ₹2.5 Lakh & Internships – Complete your registration today!&#8199; &#65279; &#847;&#8199; &#65279; &#847;&#8199; &#65279; &#847;&#8199; &#65279; &#847;&#8199; &#65279; &#847;&#8199; &#65279; &#847;&#8199; &#65279; &#847;&#8199; &#65279; &#847;&#8199; &#65279; &#847;&#8199; &#65279; &#847;&#8199; &#65279; &#847;&#8199; &#65279; &#847;&#8199; &#65279; &#847;&#8199; &#65279; &#847;&#8199; &#65279; &#847;&#8199; &#65279; &#847;&#8199; &#65279; &#847;&#8199; &#65279; &#847;&#8199; &#65279; &#847;&#8199; &#65",
+            "date": "Thu, 23 Oct 2025 17:04:00 +0000 (UTC)"
+        }
+    ]
+}

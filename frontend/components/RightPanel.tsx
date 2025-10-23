@@ -26,6 +26,13 @@ import {
   ChatMessage,
 } from '@/lib/chatApi';
 import { createTask, getOrCreateGeneralChatTask } from '@/lib/taskApi';
+import { 
+  sendChatMessage, 
+  checkBackendHealth, 
+  testConnection,
+  getFallbackResponse,
+  type ChatResponse 
+} from '@/lib/aiApi';
 
 type RightPanelProps = {
   isVisible: boolean;
@@ -44,9 +51,9 @@ export default function RightPanel({
 }: RightPanelProps) {
   const { user } = useAuth();
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
-    // Test message to verify rendering
+    // Welcome message
     {
-      text: "Hello! This is a test message to verify the chat is working.",
+      text: "Hello! I'm your AI assistant powered by advanced language models and semantic search. I can help you with tasks, roadmaps, and answer questions based on your team's context.",
       isUser: false,
       timestamp: new Date(),
     }
@@ -55,7 +62,33 @@ export default function RightPanel({
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [generalTaskId, setGeneralTaskId] = useState<string | null>(null);
+  const [backendConnected, setBackendConnected] = useState<boolean | null>(null);
+  const [backendHealth, setBackendHealth] = useState<any>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
+
+  // Check backend connection on mount
+  useEffect(() => {
+    checkBackendConnection();
+  }, []);
+
+  const checkBackendConnection = async () => {
+    try {
+      setBackendConnected(null); // Loading state
+      const isConnected = await testConnection();
+      setBackendConnected(isConnected);
+      
+      if (isConnected) {
+        const health = await checkBackendHealth();
+        setBackendHealth(health);
+        console.log('✅ AI Backend connected:', health);
+      } else {
+        console.log('❌ AI Backend not available');
+      }
+    } catch (error) {
+      console.error('Backend connection check failed:', error);
+      setBackendConnected(false);
+    }
+  };
 
   // Load chat history on mount
   useEffect(() => {
@@ -69,6 +102,13 @@ export default function RightPanel({
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [chatMessages]);
+
+  // Check backend connection on component mount
+  useEffect(() => {
+    if (isVisible) {
+      checkBackendConnection();
+    }
+  }, [isVisible]);
 
   const loadChatHistory = async () => {
     if (!user) return;
@@ -90,7 +130,7 @@ export default function RightPanel({
   };
 
   const sendMessage = async () => {
-    if (!chatInput.trim()) return; // Remove user dependency for testing
+    if (!chatInput.trim()) return;
 
     const userMessage = chatInput.trim();
     setChatInput('');
@@ -105,49 +145,86 @@ export default function RightPanel({
       };
       setChatMessages((prev) => [...prev, userMsg]);
 
-      // Skip Firebase for testing - just generate AI response locally
-      setTimeout(() => {
-        let responseText = `I received your message: "${userMessage}". This is a test response to verify the chat interface is working properly!`;
-        let shouldTriggerRoadmap = false;
+      // Try to use AI backend first
+      let aiResponse: ChatResponse;
+      let isBackendResponse = false;
 
-        // Check for roadmap keywords
-        if (userMessage.toLowerCase().includes('roadmap') || userMessage.toLowerCase().includes('create roadmap')) {
-          responseText = `🎯 **Roadmap Created Successfully!**\n\nI've generated a comprehensive roadmap view for Acme Inc. based on your request:\n\n📋 **Included Sections:**\n• Company priorities and policies\n• Strategic roadmap with timelines\n• Team assignments and status tracking\n\n✨ **The roadmap will be displayed in the main view shortly!**\n\nYou can see tasks like:\n• Launch AI-assisted onboarding\n• Enter two priority geographies\n• Migrate legacy services to modern cloud\n• Build enterprise GTM capabilities`;
-          shouldTriggerRoadmap = true;
+      try {
+        if (backendConnected) {
+          // Use your AI backend
+          aiResponse = await sendChatMessage(userMessage, user?.uid);
+          isBackendResponse = true;
+        } else {
+          throw new Error('Backend not connected');
         }
+      } catch (backendError) {
+        console.warn('Backend request failed, using fallback:', backendError);
+        // Fallback to local response
+        aiResponse = getFallbackResponse(userMessage);
+        // Try to reconnect for next message
+        checkBackendConnection();
+      }
 
-        const aiMsg: ChatMessage = {
-          text: responseText,
-          isUser: false,
-          timestamp: new Date(),
-          metadata: {
-            type: shouldTriggerRoadmap ? 'roadmap' : 'general'
-          },
-        };
-        setChatMessages((prev) => [...prev, aiMsg]);
-        setIsSaving(false);
+      // Check if this should trigger roadmap
+      const shouldTriggerRoadmap = userMessage.toLowerCase().includes('roadmap') || 
+                                   userMessage.toLowerCase().includes('create roadmap') ||
+                                   aiResponse.response.toLowerCase().includes('roadmap created');
 
-        // Trigger roadmap creation if needed
-        if (shouldTriggerRoadmap) {
-          onRoadmapCreated?.({
-            id: 'test-roadmap',
-            title: 'Acme Inc. Strategic Roadmap',
-            description: 'Company-wide strategic initiatives',
-            phases: ['Q1', 'Q2', 'Q3', 'Q4']
-          });
+      const aiMsg: ChatMessage = {
+        text: aiResponse.response,
+        isUser: false,
+        timestamp: new Date(),
+        metadata: {
+          type: shouldTriggerRoadmap ? 'roadmap' : 'general',
+          isBackendResponse,
+          confidence: aiResponse.confidence,
+          intents: aiResponse.intents ? Object.entries(aiResponse.intents).map(([key, value]) => ({ [key]: value })) : undefined,
+          retrievedDocs: aiResponse.retrieved_docs
+        },
+      };
+      setChatMessages((prev) => [...prev, aiMsg]);
+
+      // Trigger roadmap creation if needed
+      if (shouldTriggerRoadmap) {
+        try {
+          // Use backend roadmap generation if available
+          if (isBackendResponse) {
+            // Your backend might have more sophisticated roadmap data
+            onRoadmapCreated?.({
+              id: `roadmap-${Date.now()}`,
+              title: 'AI-Generated Strategic Roadmap',
+              description: 'Generated based on your requirements and context',
+              phases: ['Discovery', 'Planning', 'Implementation', 'Review']
+            });
+          } else {
+            // Fallback roadmap
+            onRoadmapCreated?.({
+              id: 'fallback-roadmap',
+              title: 'Basic Strategic Roadmap',
+              description: 'Standard roadmap template',
+              phases: ['Q1', 'Q2', 'Q3', 'Q4']
+            });
+          }
+        } catch (roadmapError) {
+          console.error('Error creating roadmap:', roadmapError);
         }
-      }, 1000);
+      }
 
     } catch (error) {
       console.error('Error sending message:', error);
       setChatMessages((prev) => [
         ...prev,
         {
-          text: 'Sorry, I encountered an error. Please try again.',
+          text: 'Sorry, I encountered an error processing your message. Please try again.',
           isUser: false,
           timestamp: new Date(),
+          metadata: {
+            type: 'error',
+            isBackendResponse: false
+          }
         },
       ]);
+    } finally {
       setIsSaving(false);
     }
   };
@@ -192,7 +269,19 @@ export default function RightPanel({
               </div>
               <div>
                 <h3 className="font-bold text-white text-lg tracking-tight">AI Assistant</h3>
-                <p className="text-white/60 text-xs">Powered by Bombil AI</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-white/60 text-xs">Powered by Bombil AI</p>
+                  <div className="flex items-center gap-1">
+                    <div className={`w-2 h-2 rounded-full ${
+                      backendConnected === null ? 'bg-yellow-400 animate-pulse' :
+                      backendConnected ? 'bg-green-400' : 'bg-red-400'
+                    }`}></div>
+                    <span className="text-white/60 text-xs">
+                      {backendConnected === null ? 'Connecting...' :
+                       backendConnected ? 'AI Online' : 'Offline'}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
             <button
