@@ -1,47 +1,53 @@
-import requests
+import os
 import json
-from datetime import datetime, timezone
 import re
-import schedule
-import time
+import requests
 import imaplib
 import email
 from email.header import decode_header
+from datetime import datetime, timezone
+import schedule
+import time
 from dotenv import load_dotenv
-import os
 
+# -----------------------
+# LOAD ENV
+# -----------------------
 load_dotenv()
+SLACK_TOKEN = os.getenv("SLACK_TOKEN")
+GITHUB_PAT = os.getenv("GITHUB_PAT")
+EMAIL = os.getenv("EMAIL")
+APP_PASSWORD = os.getenv("APP_PASSWORD")
 
 # -----------------------
 # CONFIG
 # -----------------------
-SLACK_TOKEN = os.getenv("SLACK_TOKEN")
 SLACK_CHANNEL_IDS = ["C09NZHCCPG8", "C09MYGLPA3D"]
-
 GITHUB_OWNER = "tensorflow"
 GITHUB_REPO = "tensorflow"
-GITHUB_PAT = os.getenv("GITHUB_PAT")
 GITHUB_HEADERS = {"Authorization": f"token {GITHUB_PAT}"} if GITHUB_PAT else {}
-
-EMAIL = os.getenv("EMAIL")
-APP_PASSWORD = os.getenv("APP_PASSWORD")
-
-MERGED_FILE = "merged_data.json"
+POLL_INTERVAL_SLACK = 30
+POLL_INTERVAL_GIT_GMAIL = 120
 
 # -----------------------
-# POLL INTERVALS
+# GO ONE DIRECTORY UP & FIND DATA FOLDER
 # -----------------------
-SLACK_POLL_INTERVAL = 30        # seconds
-GIT_GMAIL_POLL_INTERVAL = 120   # seconds
+os.chdir('..')
+data_folder = None
+for root, dirs, _ in os.walk('.'):
+    if 'data' in dirs:
+        data_folder = os.path.join(root, 'data')
+        break
+if not data_folder:
+    raise FileNotFoundError("No 'data' folder found. Create a 'data' folder in your project.")
+
+STORE_FILE = os.path.join(data_folder, "slack_docs_data.json")  # just the single unified file
 
 # -----------------------
-# USER CACHE
+# HELPERS
 # -----------------------
 user_cache = {}
 
-# -----------------------
-# HELPER FUNCTIONS
-# -----------------------
 def get_slack_user_name(user_id):
     if user_id in user_cache:
         return user_cache[user_id]
@@ -49,10 +55,7 @@ def get_slack_user_name(user_id):
     headers = {"Authorization": f"Bearer {SLACK_TOKEN}"}
     r = requests.get(url, headers=headers)
     data = r.json()
-    if data.get("ok"):
-        user_name = data["user"]["real_name"]
-    else:
-        user_name = user_id
+    user_name = data.get("user", {}).get("real_name", user_id) if data.get("ok") else user_id
     user_cache[user_id] = user_name
     return user_name
 
@@ -66,6 +69,26 @@ def clean_text(text):
     text = re.sub(r"\s+", " ", text).strip()
     return text
 
+def append_data_to_file(new_data):
+    if not os.path.exists(data_folder):
+        os.makedirs(data_folder)
+
+    if os.path.exists(STORE_FILE):
+        with open(STORE_FILE, "r", encoding="utf-8") as f:
+            try:
+                existing = json.load(f)
+                if not isinstance(existing, list):
+                    existing = []
+            except json.JSONDecodeError:
+                existing = []
+        existing.extend(new_data)
+        new_data = existing
+
+    with open(STORE_FILE, "w", encoding="utf-8") as f:
+        json.dump(new_data, f, indent=4, ensure_ascii=False)
+
+    print(f"✅ Appended {len(new_data)} items to {STORE_FILE} at {datetime.now(timezone.utc).isoformat()}")
+
 # -----------------------
 # FETCH FUNCTIONS
 # -----------------------
@@ -77,7 +100,7 @@ def fetch_slack():
         r = requests.get(url, headers=headers)
         data = r.json()
         if not data.get("ok"):
-            print(f"❌ Error fetching Slack channel {channel_id}: {data.get('error')}")
+            print(f"❌ Slack error {channel_id}: {data.get('error')}")
             continue
         for msg in data.get("messages", []):
             text = clean_text(msg.get("text"))
@@ -95,10 +118,9 @@ def fetch_slack():
 
 def fetch_github():
     gh_data = []
-    issues_url = f"https://api.github.com/repos/{GITHUB_OWNER}/{GITHUB_REPO}/issues"
     try:
-        r = requests.get(issues_url, headers=GITHUB_HEADERS)
-        issues = r.json()
+        issues = requests.get(f"https://api.github.com/repos/{GITHUB_OWNER}/{GITHUB_REPO}/issues",
+                              headers=GITHUB_HEADERS).json()
         if isinstance(issues, dict) and issues.get("message"):
             print(f"❌ GitHub API error: {issues['message']}")
             return []
@@ -117,13 +139,10 @@ def fetch_github():
                 "title": clean_text(issue["title"]),
                 "text": text_body
             })
-            comments_r = requests.get(issue["comments_url"], headers=GITHUB_HEADERS)
-            comments = comments_r.json()
-            if isinstance(comments, list):
-                for c in comments:
-                    c_body = clean_text(c.get("body", ""))
-                    if not c_body:
-                        continue
+            comments = requests.get(issue["comments_url"], headers=GITHUB_HEADERS).json()
+            for c in comments if isinstance(comments, list) else []:
+                c_body = clean_text(c.get("body", ""))
+                if c_body:
                     gh_data.append({
                         "source": "GitHub",
                         "user": c["user"]["login"],
@@ -133,36 +152,31 @@ def fetch_github():
                     })
         return gh_data
     except Exception as e:
-        print(f"❌ Error fetching GitHub: {e}")
+        print(f"❌ GitHub fetch error: {e}")
         return []
 
 def fetch_gmail():
+    emails_data = []
     try:
         mail = imaplib.IMAP4_SSL("imap.gmail.com")
         mail.login(EMAIL, APP_PASSWORD)
         mail.select("inbox")
         status, messages = mail.search(None, "ALL")
         email_ids = messages[0].split()[-10:]
-        emails_data = []
 
         for num in email_ids:
             _, data = mail.fetch(num, "(RFC822)")
-            raw_email = data[0][1]
-            msg = email.message_from_bytes(raw_email)
-
+            msg = email.message_from_bytes(data[0][1])
             subject, encoding = decode_header(msg["Subject"])[0]
             if isinstance(subject, bytes):
                 subject = subject.decode(encoding or "utf-8", errors="ignore")
-
             from_ = msg.get("From", "")
             date_ = msg.get("Date", "")
 
             body = ""
             if msg.is_multipart():
                 for part in msg.walk():
-                    content_type = part.get_content_type()
-                    content_disposition = str(part.get("Content-Disposition"))
-                    if content_type == "text/plain" and "attachment" not in content_disposition:
+                    if part.get_content_type() == "text/plain" and "attachment" not in str(part.get("Content-Disposition")):
                         try:
                             body = part.get_payload(decode=True).decode()
                             break
@@ -186,53 +200,31 @@ def fetch_gmail():
 
         mail.close()
         mail.logout()
-        return emails_data
-
     except Exception as e:
-        print(f"❌ Error fetching Gmail: {e}")
-        return []
+        print(f"❌ Gmail fetch error: {e}")
+
+    return emails_data
 
 # -----------------------
-# MERGE AND SAVE
+# JOB FUNCTIONS
 # -----------------------
-def save_json(data, filename=MERGED_FILE):
-    with open(filename, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=4, ensure_ascii=False)
-    print(f"✅ JSON updated at {datetime.now(timezone.utc).isoformat()}")
-
-# -----------------------
-# JOBS
-# -----------------------
-slack_data_cache = []
-
-def job_slack():
-    global slack_data_cache
-    slack_data_cache = fetch_slack()
-    save_json({
-        "slack": slack_data_cache,
-        "github": [],
-        "gmail": []
-    })
-
-def job_git_gmail():
-    merged = {
-        "slack": slack_data_cache,
-        "github": fetch_github(),
-        "gmail": fetch_gmail()
-    }
-    save_json(merged)
+def job_fetch_all():
+    all_data = []
+    all_data.extend(fetch_slack())
+    all_data.extend(fetch_github())
+    all_data.extend(fetch_gmail())
+    append_data_to_file(all_data)
 
 # -----------------------
 # SCHEDULE
 # -----------------------
-schedule.every(SLACK_POLL_INTERVAL).seconds.do(job_slack)
-schedule.every(GIT_GMAIL_POLL_INTERVAL).seconds.do(job_git_gmail)
+schedule.every(POLL_INTERVAL_SLACK).seconds.do(job_fetch_all)
+schedule.every(POLL_INTERVAL_GIT_GMAIL).seconds.do(job_fetch_all)
 
-print(f"🚀 Polling Slack every {SLACK_POLL_INTERVAL}s, GitHub + Gmail every {GIT_GMAIL_POLL_INTERVAL}s...")
+print(f"🚀 Polling all sources. Slack every {POLL_INTERVAL_SLACK}s, GitHub + Gmail every {POLL_INTERVAL_GIT_GMAIL}s...")
 
 # Initial run
-job_slack()
-job_git_gmail()
+job_fetch_all()
 
 while True:
     schedule.run_pending()

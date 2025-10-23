@@ -4,124 +4,129 @@ import re
 import time
 import hashlib
 from datetime import datetime
+from email.utils import parsedate_to_datetime
 import chromadb
 from sentence_transformers import SentenceTransformer
-
 
 # -----------------------
 # CONFIGURATION
 # -----------------------
-DATA_FILE = "data/slack_docs_data.json"
+DATA_FILES = [
+    "data/slack_docs_data.json",
+    "data/gmail_docs_data.json",
+    "data/github_docs_data.json"
+]
 PERSIST_DIR = "./chroma_store"
 COLLECTION_NAME = "team_context"
 EMBED_MODEL = "all-MiniLM-L6-v2"
+POLL_INTERVAL = 10  # seconds
 
-# ✅ Initialize Chroma persistent client and collection
+# -----------------------
+# INITIALIZE CHROMA & MODEL
+# -----------------------
 os.makedirs(PERSIST_DIR, exist_ok=True)
 client = chromadb.PersistentClient(path=PERSIST_DIR)
 collection = client.get_or_create_collection(name=COLLECTION_NAME)
-
-# ✅ Initialize embedding model
 model = SentenceTransformer(EMBED_MODEL)
-
 
 # -----------------------
 # HELPERS
 # -----------------------
 def clean_text(text: str):
-    """Remove mentions and system messages."""
+    if not text:
+        return None
     text = re.sub(r"<@[\w]+>", "", text).strip()
     if "has joined the channel" in text.lower():
         return None
     return text
 
+def to_iso_timestamp(value):
+    if not value:
+        return datetime.utcnow().isoformat()
+    try:
+        return datetime.fromisoformat(str(value).replace("Z", "+00:00")).isoformat()
+    except ValueError:
+        try:
+            return parsedate_to_datetime(str(value)).isoformat()
+        except Exception:
+            return datetime.utcnow().isoformat()
 
 def generate_id(record: dict):
-    """Generate deterministic hash ID for deduplication."""
-    raw = f"{record['source']}_{record['user']}_{record['timestamp']}_{record['text']}"
+    text = record.get("text") or record.get("body") or record.get("title") or ""
+    user = record.get("user") or record.get("from") or "unknown"
+    ts = record.get("timestamp") or record.get("date") or str(time.time())
+    raw = f"{record.get('source','unknown')}_{user}_{ts}_{text}"
     return hashlib.sha1(raw.encode()).hexdigest()
 
-
 def preprocess_records(records: list):
-    """Clean and prepare JSON data for Chroma insertion."""
     cleaned = []
     for r in records:
-        text = clean_text(r["text"])
+        text = r.get("text") or r.get("body") or r.get("title")
+        text = clean_text(text)
         if not text:
             continue
+        ts_value = r.get("timestamp") or r.get("date") or datetime.utcnow().isoformat()
+        ts_iso = to_iso_timestamp(ts_value)
+        user = r.get("user") or r.get("from") or "unknown"
         cleaned.append({
             "id": generate_id(r),
             "document": text,
             "metadata": {
-                "source": r["source"],
-                "user": r["user"],
-                "timestamp": datetime.fromisoformat(
-                    r["timestamp"].replace("Z", "+00:00")
-                ).isoformat()
+                "source": r.get("source", "unknown"),
+                "user": user,
+                "timestamp": ts_iso
             }
         })
     return cleaned
 
-
 def existing_ids():
-    """Fetch all stored IDs from Chroma."""
     data = collection.get()
     if not data or not data.get("ids"):
         return set()
     return set(data["ids"])
 
-
 def add_new_records(records: list):
-    """Insert new records (skip duplicates)."""
     current_ids = existing_ids()
     new_records = [r for r in records if r["id"] not in current_ids]
-
     if not new_records:
         print("✅ No new data to add.")
         return
-
     print(f"🧩 Adding {len(new_records)} new records...")
-
     docs = [r["document"] for r in new_records]
     metas = [r["metadata"] for r in new_records]
     ids = [r["id"] for r in new_records]
     embeddings = model.encode(docs)
-
     collection.add(ids=ids, documents=docs, metadatas=metas, embeddings=embeddings)
     print(f"✅ Successfully added {len(new_records)} new records.")
 
-
 # -----------------------
-# MAIN LOOP
+# WATCH FILES & UPDATE
 # -----------------------
 def watch_and_update(interval=10):
-    """Continuously watch the JSON file for updates."""
-    last_hash = None
+    last_mtime = {f: 0 for f in DATA_FILES}
     while True:
-        if not os.path.exists(DATA_FILE):
-            print("⚠️ Data file not found.")
-            time.sleep(interval)
-            continue
-
-        with open(DATA_FILE, "r", encoding="utf-8") as f:
-            raw_data = f.read()
-
-        new_hash = hashlib.md5(raw_data.encode()).hexdigest()
-
-        if new_hash != last_hash:
+        for file in DATA_FILES:
+            if not os.path.exists(file):
+                print(f"⚠️ Data file '{file}' not found.")
+                continue
             try:
-                records = json.loads(raw_data)
+                mtime = os.path.getmtime(file)
+                if mtime <= last_mtime[file]:
+                    continue
+                last_mtime[file] = mtime
+                with open(file, "r", encoding="utf-8") as f:
+                    records = json.load(f)
                 processed = preprocess_records(records)
                 add_new_records(processed)
-                last_hash = new_hash
+            except json.JSONDecodeError:
+                print(f"⚠️ File '{file}' not ready or partially written, skipping...")
             except Exception as e:
-                print(f"❌ Error processing data: {e}")
-        else:
-            print("⏳ No changes detected...")
-
+                print(f"❌ Error processing {file}: {e}")
         time.sleep(interval)
 
-
+# -----------------------
+# MAIN
+# -----------------------
 if __name__ == "__main__":
-    print(f"🚀 Watching '{DATA_FILE}' for updates...")
-    watch_and_update(interval=15)
+    print(f"🚀 Watching {DATA_FILES} for updates and inserting into Chroma...")
+    watch_and_update(interval=POLL_INTERVAL)

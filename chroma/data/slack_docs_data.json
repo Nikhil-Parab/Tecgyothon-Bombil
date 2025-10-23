@@ -1,209 +1,1721 @@
 [
-  {
-    "source": "Slack",
-    "channel_id": "C09NZHCCPG8",
-    "user": "Omdeep Borkar",
-    "timestamp": "2025-10-23T09:56:39.718239Z",
-    "text": ":sob::sob::sob::sob::sob::sob::sob::sob::pray:yooooooo"
-  },
-  {
-    "source": "Slack",
-    "channel_id": "C09NZHCCPG8",
-    "user": "Omdeep Borkar",
-    "timestamp": "2025-10-23T09:55:57.993909Z",
-    "text": "w in the chat"
-  },
-  {
-    "source": "Slack",
-    "channel_id": "C09NZHCCPG8",
-    "user": "Omdeep Borkar",
-    "timestamp": "2025-10-23T09:55:54.786749Z",
-    "text": "boiiii reeee"
-  },
-  {
-    "source": "Slack",
-    "channel_id": "C09NZHCCPG8",
-    "user": "Omdeep Borkar",
-    "timestamp": "2025-10-23T09:55:04.356419Z",
-    "text": "yoooooooooooooom"
-  },
-  {
-    "source": "Slack",
-    "channel_id": "C09NZHCCPG8",
-    "user": "Omdeep Borkar",
-    "timestamp": "2025-10-23T09:43:09.464509Z",
-    "text": "hiii wheres the filesssss"
-  },
-  {
-    "source": "Slack",
-    "channel_id": "C09NZHCCPG8",
-    "user": "Omdeep Borkar",
-    "timestamp": "2025-10-23T09:41:39.550809Z",
-    "text": "i want the assignment by 6 pm"
-  },
-  {
-    "source": "Slack",
-    "channel_id": "C09NZHCCPG8",
-    "user": "Omdeep Borkar",
-    "timestamp": "2025-10-23T09:22:53.340609Z",
-    "text": "bareee"
-  },
-  {
-    "source": "Slack",
-    "channel_id": "C09NZHCCPG8",
-    "user": "Nischay Mandrekar",
-    "timestamp": "2025-10-23T09:22:20.538949Z",
-    "text": "bare ulai re kamache kite"
-  },
-  {
-    "source": "Slack",
-    "channel_id": "C09NZHCCPG8",
-    "user": "Omdeep Borkar",
-    "timestamp": "2025-10-23T09:22:11.398829Z",
-    "text": "hiiii nibaaaa"
-  },
-  {
-    "source": "Slack",
-    "channel_id": "C09NZHCCPG8",
-    "user": "Omdeep Borkar",
-    "timestamp": "2025-10-23T09:21:06.907529Z",
-    "text": "<@U09N5N23Y02> has joined the channel"
-  },
-  {
-    "source": "Slack",
-    "channel_id": "C09MYGLPA3D",
-    "user": "Nischay Mandrekar",
-    "timestamp": "2025-10-23T09:42:07.744969Z",
-    "text": "bare re"
-  },
-  {
-    "source": "Slack",
-    "channel_id": "C09MYGLPA3D",
-    "user": "Omdeep Borkar",
-    "timestamp": "2025-10-23T09:41:59.069289Z",
-    "text": "hiii guys weicome to bombilll"
-  },
-  {
-    "source": "GoogleDocs",
-    "user": "Amit",
-    "timestamp": "2025-10-23T09:00:00Z",
-    "text": "Project kickoff notes: define milestones."
-  },
-  {
-    "source": "GoogleDocs",
-    "user": "Priya",
-    "timestamp": "2025-10-23T10:00:00Z",
-    "text": "Initial draft of migration plan completed."
-  },
-  {
-    "source": "GoogleDocs",
-    "user": "Raj",
-    "timestamp": "2025-10-23T11:15:00Z",
-    "text": "Reviewed team availability for next sprint."
-  },
-  {
-    "source": "Slack",
-    "user": "U09NXYZ123",
-    "timestamp": "2025-10-23T11:20:30.123456Z",
-    "text": "Reminder: submit your weekly reports by 5 PM."
-  },
-  {
-    "source": "GoogleDocs",
-    "user": "Priya",
-    "timestamp": "2025-10-23T12:00:00Z",
-    "text": "Updated migration plan with new risk assessments."
-  },
-  {
-    "source": "Slack",
-    "user": "U09N5N23Y02",
-    "timestamp": "2025-10-23T12:10:45.654321Z",
-    "text": "Got it, will update the plan accordingly."
-  },
-  {
-    "source": "GoogleDocs",
-    "user": "Amit",
-    "timestamp": "2025-10-23T12:30:00Z",
-    "text": "Finalized milestones and shared with stakeholders."
-  },
-  {
-    "source": "Slack",
-    "channel_id": "C09NZHCCPG8",
-    "user": "Omdeep Borkar",
-    "timestamp": "2025-10-23T09:55:57.993909Z",
-    "text": "Hey team, just a reminder that the project deliverables for the first phase are due by 6 PM today. Make sure to upload all your work in the shared folder."
-  },
-  {
-    "source": "Slack",
-    "channel_id": "C09NZHCCPG8",
-    "user": "Priya Sharma",
-    "timestamp": "2025-10-23T10:05:22.123456Z",
-    "text": "I've completed the initial draft of the migration plan. I need someone to review it and provide feedback by end of the day so we can finalize it tomorrow."
-  },
-  {
-    "source": "Slack",
-    "channel_id": "C09NZHCCPG8",
-    "user": "Amit Singh",
-    "timestamp": "2025-10-23T10:15:47.654321Z",
-    "text": "Just updated the database schema with the latest changes. Please make sure your local copies are synced to avoid merge conflicts."
-  },
-  {
-    "source": "Slack",
-    "channel_id": "C09NZHCCPG8",
-    "user": "Omdeep Borkar",
-    "timestamp": "2025-10-23T10:25:18.987654Z",
-    "text": "Reminder: The client presentation is scheduled for next Monday. We should finalize the slides and rehearse the talking points by Friday evening."
-  },
-  {
-    "source": "Slack",
-    "channel_id": "C09NZHCCPG8",
-    "user": "Priya Sharma",
-    "timestamp": "2025-10-23T10:35:12.246810Z",
-    "text": "I noticed some inconsistencies in the data migration logs. We need to validate the entries before running the automated scripts tonight."
-  },
-  {
-    "source": "GoogleDocs",
-    "user": "Amit Singh",
-    "timestamp": "2025-10-23T11:00:00Z",
-    "text": "Meeting notes: Discussed resource allocation and milestones for the next sprint. Agreed to allocate additional QA support to reduce testing bottlenecks."
-  },
-  {
-    "source": "GoogleDocs",
-    "user": "Priya Sharma",
-    "timestamp": "2025-10-23T11:15:00Z",
-    "text": "Draft report on system performance: The load times have improved by 15% after implementing caching strategies. Recommendations include optimizing database indices further."
-  },
-  {
-    "source": "Slack",
-    "channel_id": "C09NZHCCPG8",
-    "user": "Omdeep Borkar",
-    "timestamp": "2025-10-23T11:25:33.112233Z",
-    "text": "Can someone confirm if the API endpoints for the new module are fully documented? We need to hand them over to the frontend team by EOD."
-  },
-  {
-    "source": "Slack",
-    "channel_id": "C09NZHCCPG8",
-    "user": "Priya Sharma",
-    "timestamp": "2025-10-23T11:45:22.334455Z",
-    "text": "Completed the draft for the user guide. It includes detailed instructions for both the admin and end-user flows. Feedback is welcome before I share it with the wider team."
-  },
-  {
-    "source": "Slack",
-    "channel_id": "C09NZHCCPG8",
-    "user": "Amit Singh",
-    "timestamp": "2025-10-23T12:05:44.556677Z",
-    "text": "I've merged the latest feature branch into main. Please pull the changes and run your tests to ensure nothing is broken."
-  },
-  {
-    "source": "Slack",
-    "channel_id": "C09NZHCCPG8",
-    "user": "Omdeep Borkar",
-    "timestamp": "2025-10-23T12:25:55.667788Z",
-    "text": "Quick update: The client raised a few issues regarding the reporting module. We need to fix them before the next demo session on Thursday."
-  },
-  {
-    "source": "GoogleDocs",
-    "user": "Priya Sharma",
-    "timestamp": "2025-10-23T12:45:00Z",
-    "text": "Technical notes: Implemented data validation checks and added error logging for critical endpoints. This should reduce debugging time in production."
-  }
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:56:39.718239Z",
+        "text": ":sob::sob::sob::sob::sob::sob::sob::sob::pray:yooooooo"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:57.993909Z",
+        "text": "w in the chat"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:54.786749Z",
+        "text": "boiiii reeee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:04.356419Z",
+        "text": "yoooooooooooooom"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:43:09.464509Z",
+        "text": "hiii wheres the filesssss"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:39.550809Z",
+        "text": "i want the assignment by 6 pm"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:53.340609Z",
+        "text": "bareee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:22:20.538949Z",
+        "text": "bare ulai re kamache kite"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:11.398829Z",
+        "text": "hiiii nibaaaa"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:21:06.907529Z",
+        "text": "<@U09N5N23Y02> has joined the channel"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:42:07.744969Z",
+        "text": "bare re"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:59.069289Z",
+        "text": "hiii guys weicome to bombilll"
+    },
+    {
+        "source": "GoogleDocs",
+        "user": "Amit",
+        "timestamp": "2025-10-23T09:00:00Z",
+        "text": "Project kickoff notes: define milestones."
+    },
+    {
+        "source": "GoogleDocs",
+        "user": "Priya",
+        "timestamp": "2025-10-23T10:00:00Z",
+        "text": "Initial draft of migration plan completed."
+    },
+    {
+        "source": "GoogleDocs",
+        "user": "Raj",
+        "timestamp": "2025-10-23T11:15:00Z",
+        "text": "Reviewed team availability for next sprint."
+    },
+    {
+        "source": "Slack",
+        "user": "U09NXYZ123",
+        "timestamp": "2025-10-23T11:20:30.123456Z",
+        "text": "Reminder: submit your weekly reports by 5 PM."
+    },
+    {
+        "source": "GoogleDocs",
+        "user": "Priya",
+        "timestamp": "2025-10-23T12:00:00Z",
+        "text": "Updated migration plan with new risk assessments."
+    },
+    {
+        "source": "Slack",
+        "user": "U09N5N23Y02",
+        "timestamp": "2025-10-23T12:10:45.654321Z",
+        "text": "Got it, will update the plan accordingly."
+    },
+    {
+        "source": "GoogleDocs",
+        "user": "Amit",
+        "timestamp": "2025-10-23T12:30:00Z",
+        "text": "Finalized milestones and shared with stakeholders."
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:57.993909Z",
+        "text": "Hey team, just a reminder that the project deliverables for the first phase are due by 6 PM today. Make sure to upload all your work in the shared folder."
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Priya Sharma",
+        "timestamp": "2025-10-23T10:05:22.123456Z",
+        "text": "I've completed the initial draft of the migration plan. I need someone to review it and provide feedback by end of the day so we can finalize it tomorrow."
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Amit Singh",
+        "timestamp": "2025-10-23T10:15:47.654321Z",
+        "text": "Just updated the database schema with the latest changes. Please make sure your local copies are synced to avoid merge conflicts."
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T10:25:18.987654Z",
+        "text": "Reminder: The client presentation is scheduled for next Monday. We should finalize the slides and rehearse the talking points by Friday evening."
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Priya Sharma",
+        "timestamp": "2025-10-23T10:35:12.246810Z",
+        "text": "I noticed some inconsistencies in the data migration logs. We need to validate the entries before running the automated scripts tonight."
+    },
+    {
+        "source": "GoogleDocs",
+        "user": "Amit Singh",
+        "timestamp": "2025-10-23T11:00:00Z",
+        "text": "Meeting notes: Discussed resource allocation and milestones for the next sprint. Agreed to allocate additional QA support to reduce testing bottlenecks."
+    },
+    {
+        "source": "GoogleDocs",
+        "user": "Priya Sharma",
+        "timestamp": "2025-10-23T11:15:00Z",
+        "text": "Draft report on system performance: The load times have improved by 15% after implementing caching strategies. Recommendations include optimizing database indices further."
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T11:25:33.112233Z",
+        "text": "Can someone confirm if the API endpoints for the new module are fully documented? We need to hand them over to the frontend team by EOD."
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Priya Sharma",
+        "timestamp": "2025-10-23T11:45:22.334455Z",
+        "text": "Completed the draft for the user guide. It includes detailed instructions for both the admin and end-user flows. Feedback is welcome before I share it with the wider team."
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Amit Singh",
+        "timestamp": "2025-10-23T12:05:44.556677Z",
+        "text": "I've merged the latest feature branch into main. Please pull the changes and run your tests to ensure nothing is broken."
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T12:25:55.667788Z",
+        "text": "Quick update: The client raised a few issues regarding the reporting module. We need to fix them before the next demo session on Thursday."
+    },
+    {
+        "source": "GoogleDocs",
+        "user": "Priya Sharma",
+        "timestamp": "2025-10-23T12:45:00Z",
+        "text": "Technical notes: Implemented data validation checks and added error logging for critical endpoints. This should reduce debugging time in production."
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:56:39.718239+00:00",
+        "text": "yooooooo"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:57.993909+00:00",
+        "text": "w in the chat"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:54.786749+00:00",
+        "text": "boiiii reeee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:04.356419+00:00",
+        "text": "yoooooooooooooom"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:43:09.464509+00:00",
+        "text": "hiii wheres the filesssss"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:39.550809+00:00",
+        "text": "i want the assignment by 6 pm"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:53.340609+00:00",
+        "text": "bareee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:22:20.538949+00:00",
+        "text": "bare ulai re kamache kite"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:11.398829+00:00",
+        "text": "hiiii nibaaaa"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:21:06.907529+00:00",
+        "text": "has joined the channel"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:42:07.744969+00:00",
+        "text": "bare re"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:59.069289+00:00",
+        "text": "hiii guys weicome to bombilll"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:56:39.718239+00:00",
+        "text": "yooooooo"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:57.993909+00:00",
+        "text": "w in the chat"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:54.786749+00:00",
+        "text": "boiiii reeee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:04.356419+00:00",
+        "text": "yoooooooooooooom"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:43:09.464509+00:00",
+        "text": "hiii wheres the filesssss"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:39.550809+00:00",
+        "text": "i want the assignment by 6 pm"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:53.340609+00:00",
+        "text": "bareee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:22:20.538949+00:00",
+        "text": "bare ulai re kamache kite"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:11.398829+00:00",
+        "text": "hiiii nibaaaa"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:21:06.907529+00:00",
+        "text": "has joined the channel"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:42:07.744969+00:00",
+        "text": "bare re"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:59.069289+00:00",
+        "text": "hiii guys weicome to bombilll"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:56:39.718239+00:00",
+        "text": "yooooooo"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:57.993909+00:00",
+        "text": "w in the chat"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:54.786749+00:00",
+        "text": "boiiii reeee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:04.356419+00:00",
+        "text": "yoooooooooooooom"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:43:09.464509+00:00",
+        "text": "hiii wheres the filesssss"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:39.550809+00:00",
+        "text": "i want the assignment by 6 pm"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:53.340609+00:00",
+        "text": "bareee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:22:20.538949+00:00",
+        "text": "bare ulai re kamache kite"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:11.398829+00:00",
+        "text": "hiiii nibaaaa"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:21:06.907529+00:00",
+        "text": "has joined the channel"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:42:07.744969+00:00",
+        "text": "bare re"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:59.069289+00:00",
+        "text": "hiii guys weicome to bombilll"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:56:39.718239+00:00",
+        "text": "yooooooo"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:57.993909+00:00",
+        "text": "w in the chat"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:54.786749+00:00",
+        "text": "boiiii reeee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:04.356419+00:00",
+        "text": "yoooooooooooooom"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:43:09.464509+00:00",
+        "text": "hiii wheres the filesssss"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:39.550809+00:00",
+        "text": "i want the assignment by 6 pm"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:53.340609+00:00",
+        "text": "bareee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:22:20.538949+00:00",
+        "text": "bare ulai re kamache kite"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:11.398829+00:00",
+        "text": "hiiii nibaaaa"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:21:06.907529+00:00",
+        "text": "has joined the channel"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:42:07.744969+00:00",
+        "text": "bare re"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:59.069289+00:00",
+        "text": "hiii guys weicome to bombilll"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:56:39.718239+00:00",
+        "text": "yooooooo"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:57.993909+00:00",
+        "text": "w in the chat"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:54.786749+00:00",
+        "text": "boiiii reeee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:04.356419+00:00",
+        "text": "yoooooooooooooom"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:43:09.464509+00:00",
+        "text": "hiii wheres the filesssss"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:39.550809+00:00",
+        "text": "i want the assignment by 6 pm"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:53.340609+00:00",
+        "text": "bareee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:22:20.538949+00:00",
+        "text": "bare ulai re kamache kite"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:11.398829+00:00",
+        "text": "hiiii nibaaaa"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:21:06.907529+00:00",
+        "text": "has joined the channel"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:42:07.744969+00:00",
+        "text": "bare re"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:59.069289+00:00",
+        "text": "hiii guys weicome to bombilll"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:56:39.718239+00:00",
+        "text": "yooooooo"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:57.993909+00:00",
+        "text": "w in the chat"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:54.786749+00:00",
+        "text": "boiiii reeee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:04.356419+00:00",
+        "text": "yoooooooooooooom"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:43:09.464509+00:00",
+        "text": "hiii wheres the filesssss"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:39.550809+00:00",
+        "text": "i want the assignment by 6 pm"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:53.340609+00:00",
+        "text": "bareee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:22:20.538949+00:00",
+        "text": "bare ulai re kamache kite"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:11.398829+00:00",
+        "text": "hiiii nibaaaa"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:21:06.907529+00:00",
+        "text": "has joined the channel"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:42:07.744969+00:00",
+        "text": "bare re"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:59.069289+00:00",
+        "text": "hiii guys weicome to bombilll"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:56:39.718239+00:00",
+        "text": "yooooooo"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:57.993909+00:00",
+        "text": "w in the chat"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:54.786749+00:00",
+        "text": "boiiii reeee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:04.356419+00:00",
+        "text": "yoooooooooooooom"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:43:09.464509+00:00",
+        "text": "hiii wheres the filesssss"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:39.550809+00:00",
+        "text": "i want the assignment by 6 pm"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:53.340609+00:00",
+        "text": "bareee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:22:20.538949+00:00",
+        "text": "bare ulai re kamache kite"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:11.398829+00:00",
+        "text": "hiiii nibaaaa"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:21:06.907529+00:00",
+        "text": "has joined the channel"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:42:07.744969+00:00",
+        "text": "bare re"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:59.069289+00:00",
+        "text": "hiii guys weicome to bombilll"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:56:39.718239+00:00",
+        "text": "yooooooo"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:57.993909+00:00",
+        "text": "w in the chat"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:54.786749+00:00",
+        "text": "boiiii reeee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:04.356419+00:00",
+        "text": "yoooooooooooooom"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:43:09.464509+00:00",
+        "text": "hiii wheres the filesssss"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:39.550809+00:00",
+        "text": "i want the assignment by 6 pm"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:53.340609+00:00",
+        "text": "bareee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:22:20.538949+00:00",
+        "text": "bare ulai re kamache kite"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:11.398829+00:00",
+        "text": "hiiii nibaaaa"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:21:06.907529+00:00",
+        "text": "has joined the channel"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:42:07.744969+00:00",
+        "text": "bare re"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:59.069289+00:00",
+        "text": "hiii guys weicome to bombilll"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:56:39.718239+00:00",
+        "text": "yooooooo"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:57.993909+00:00",
+        "text": "w in the chat"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:54.786749+00:00",
+        "text": "boiiii reeee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:04.356419+00:00",
+        "text": "yoooooooooooooom"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:43:09.464509+00:00",
+        "text": "hiii wheres the filesssss"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:39.550809+00:00",
+        "text": "i want the assignment by 6 pm"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:53.340609+00:00",
+        "text": "bareee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:22:20.538949+00:00",
+        "text": "bare ulai re kamache kite"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:11.398829+00:00",
+        "text": "hiiii nibaaaa"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:21:06.907529+00:00",
+        "text": "has joined the channel"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:42:07.744969+00:00",
+        "text": "bare re"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:59.069289+00:00",
+        "text": "hiii guys weicome to bombilll"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:56:39.718239+00:00",
+        "text": "yooooooo"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:57.993909+00:00",
+        "text": "w in the chat"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:54.786749+00:00",
+        "text": "boiiii reeee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:04.356419+00:00",
+        "text": "yoooooooooooooom"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:43:09.464509+00:00",
+        "text": "hiii wheres the filesssss"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:39.550809+00:00",
+        "text": "i want the assignment by 6 pm"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:53.340609+00:00",
+        "text": "bareee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:22:20.538949+00:00",
+        "text": "bare ulai re kamache kite"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:11.398829+00:00",
+        "text": "hiiii nibaaaa"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:21:06.907529+00:00",
+        "text": "has joined the channel"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:42:07.744969+00:00",
+        "text": "bare re"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:59.069289+00:00",
+        "text": "hiii guys weicome to bombilll"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T18:23:11.721919+00:00",
+        "text": "ektooo"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T18:23:08.691489+00:00",
+        "text": "nischay murgattaaaa"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T18:23:02.011249+00:00",
+        "text": "at 5 pm meeting"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T18:22:52.656789+00:00",
+        "text": "hiiiiiiiiii nischauuutt"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:56:39.718239+00:00",
+        "text": "yooooooo"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:57.993909+00:00",
+        "text": "w in the chat"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:54.786749+00:00",
+        "text": "boiiii reeee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:04.356419+00:00",
+        "text": "yoooooooooooooom"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:43:09.464509+00:00",
+        "text": "hiii wheres the filesssss"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:39.550809+00:00",
+        "text": "i want the assignment by 6 pm"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:53.340609+00:00",
+        "text": "bareee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:22:20.538949+00:00",
+        "text": "bare ulai re kamache kite"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:11.398829+00:00",
+        "text": "hiiii nibaaaa"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:21:06.907529+00:00",
+        "text": "has joined the channel"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:42:07.744969+00:00",
+        "text": "bare re"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:59.069289+00:00",
+        "text": "hiii guys weicome to bombilll"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T18:23:11.721919+00:00",
+        "text": "ektooo"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T18:23:08.691489+00:00",
+        "text": "nischay murgattaaaa"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T18:23:02.011249+00:00",
+        "text": "at 5 pm meeting"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T18:22:52.656789+00:00",
+        "text": "hiiiiiiiiii nischauuutt"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:56:39.718239+00:00",
+        "text": "yooooooo"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:57.993909+00:00",
+        "text": "w in the chat"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:54.786749+00:00",
+        "text": "boiiii reeee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:04.356419+00:00",
+        "text": "yoooooooooooooom"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:43:09.464509+00:00",
+        "text": "hiii wheres the filesssss"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:39.550809+00:00",
+        "text": "i want the assignment by 6 pm"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:53.340609+00:00",
+        "text": "bareee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:22:20.538949+00:00",
+        "text": "bare ulai re kamache kite"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:11.398829+00:00",
+        "text": "hiiii nibaaaa"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:21:06.907529+00:00",
+        "text": "has joined the channel"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:42:07.744969+00:00",
+        "text": "bare re"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:59.069289+00:00",
+        "text": "hiii guys weicome to bombilll"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T18:23:11.721919+00:00",
+        "text": "ektooo"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T18:23:08.691489+00:00",
+        "text": "nischay murgattaaaa"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T18:23:02.011249+00:00",
+        "text": "at 5 pm meeting"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T18:22:52.656789+00:00",
+        "text": "hiiiiiiiiii nischauuutt"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:56:39.718239+00:00",
+        "text": "yooooooo"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:57.993909+00:00",
+        "text": "w in the chat"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:54.786749+00:00",
+        "text": "boiiii reeee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:04.356419+00:00",
+        "text": "yoooooooooooooom"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:43:09.464509+00:00",
+        "text": "hiii wheres the filesssss"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:39.550809+00:00",
+        "text": "i want the assignment by 6 pm"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:53.340609+00:00",
+        "text": "bareee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:22:20.538949+00:00",
+        "text": "bare ulai re kamache kite"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:11.398829+00:00",
+        "text": "hiiii nibaaaa"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:21:06.907529+00:00",
+        "text": "has joined the channel"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:42:07.744969+00:00",
+        "text": "bare re"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:59.069289+00:00",
+        "text": "hiii guys weicome to bombilll"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T18:23:11.721919+00:00",
+        "text": "ektooo"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T18:23:08.691489+00:00",
+        "text": "nischay murgattaaaa"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T18:23:02.011249+00:00",
+        "text": "at 5 pm meeting"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T18:22:52.656789+00:00",
+        "text": "hiiiiiiiiii nischauuutt"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:56:39.718239+00:00",
+        "text": "yooooooo"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:57.993909+00:00",
+        "text": "w in the chat"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:54.786749+00:00",
+        "text": "boiiii reeee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:04.356419+00:00",
+        "text": "yoooooooooooooom"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:43:09.464509+00:00",
+        "text": "hiii wheres the filesssss"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:39.550809+00:00",
+        "text": "i want the assignment by 6 pm"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:53.340609+00:00",
+        "text": "bareee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:22:20.538949+00:00",
+        "text": "bare ulai re kamache kite"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:11.398829+00:00",
+        "text": "hiiii nibaaaa"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:21:06.907529+00:00",
+        "text": "has joined the channel"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:42:07.744969+00:00",
+        "text": "bare re"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:59.069289+00:00",
+        "text": "hiii guys weicome to bombilll"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T18:23:11.721919+00:00",
+        "text": "ektooo"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T18:23:08.691489+00:00",
+        "text": "nischay murgattaaaa"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T18:23:02.011249+00:00",
+        "text": "at 5 pm meeting"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T18:22:52.656789+00:00",
+        "text": "hiiiiiiiiii nischauuutt"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:56:39.718239+00:00",
+        "text": "yooooooo"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:57.993909+00:00",
+        "text": "w in the chat"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:54.786749+00:00",
+        "text": "boiiii reeee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:04.356419+00:00",
+        "text": "yoooooooooooooom"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:43:09.464509+00:00",
+        "text": "hiii wheres the filesssss"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:39.550809+00:00",
+        "text": "i want the assignment by 6 pm"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:53.340609+00:00",
+        "text": "bareee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:22:20.538949+00:00",
+        "text": "bare ulai re kamache kite"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:11.398829+00:00",
+        "text": "hiiii nibaaaa"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:21:06.907529+00:00",
+        "text": "has joined the channel"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:42:07.744969+00:00",
+        "text": "bare re"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:59.069289+00:00",
+        "text": "hiii guys weicome to bombilll"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T18:23:11.721919+00:00",
+        "text": "ektooo"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T18:23:08.691489+00:00",
+        "text": "nischay murgattaaaa"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T18:23:02.011249+00:00",
+        "text": "at 5 pm meeting"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T18:22:52.656789+00:00",
+        "text": "hiiiiiiiiii nischauuutt"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:56:39.718239+00:00",
+        "text": "yooooooo"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:57.993909+00:00",
+        "text": "w in the chat"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:54.786749+00:00",
+        "text": "boiiii reeee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:55:04.356419+00:00",
+        "text": "yoooooooooooooom"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:43:09.464509+00:00",
+        "text": "hiii wheres the filesssss"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:39.550809+00:00",
+        "text": "i want the assignment by 6 pm"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:53.340609+00:00",
+        "text": "bareee"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:22:20.538949+00:00",
+        "text": "bare ulai re kamache kite"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:22:11.398829+00:00",
+        "text": "hiiii nibaaaa"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09NZHCCPG8",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:21:06.907529+00:00",
+        "text": "has joined the channel"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Nischay Mandrekar",
+        "timestamp": "2025-10-23T09:42:07.744969+00:00",
+        "text": "bare re"
+    },
+    {
+        "source": "Slack",
+        "channel_id": "C09MYGLPA3D",
+        "user": "Omdeep Borkar",
+        "timestamp": "2025-10-23T09:41:59.069289+00:00",
+        "text": "hiii guys weicome to bombilll"
+    }
 ]
