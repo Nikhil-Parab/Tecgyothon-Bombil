@@ -62,7 +62,7 @@ const Navbar = () => {
     >
       <div className="flex h-full justify-between items-center px-4 md:px-8 lg:px-12">
         <div className="flex items-center">
-          <Link href="/" className="text-2xl font-bold tracking-tight">Bombil</Link>
+          <Link href="/" className="text-2xl font-bold tracking-tight">REMO.ai</Link>
         </div>
 
         {/* Desktop Navigation */}

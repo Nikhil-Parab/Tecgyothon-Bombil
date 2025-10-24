@@ -72,7 +72,7 @@ export default function AuthPage() {
             </div>
           </div>
           <h1 className="text-3xl font-bold text-black mb-2">
-            Welcome to Bombil
+            Welcome to REMO.ai
           </h1>
           <p className="text-gray-600">
             Smart task management for professionals

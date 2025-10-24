@@ -789,6 +789,129 @@ export default function DashboardEnhanced() {
     return `🔍 **Task Summary: ${task.title}**\n\n📋 **Status:** ${status}\n🎯 **Priority:** ${priority}\n📅 **Deadline:** ${deadline}\n👤 **Assigned to:** ${assignedTo}\n🏷️ **Tags:** ${tags}\n\n📝 **Description:**\n${task.description || 'No description available'}\n\n� **Timeline:**\n• Created: ${createdDate}\n• Last updated: ${updatedDate}`;
   };
 
+  // Date parsing function to extract dates from user messages
+  const parseMessageDate = (message: string): Date | null => {
+    const lowerMessage = message.toLowerCase();
+    const currentDate = new Date();
+    
+    // Handle relative dates
+    if (lowerMessage.includes('tomorrow')) {
+      const tomorrow = new Date(currentDate);
+      tomorrow.setDate(currentDate.getDate() + 1);
+      return tomorrow;
+    }
+    
+    if (lowerMessage.includes('next week')) {
+      const nextWeek = new Date(currentDate);
+      nextWeek.setDate(currentDate.getDate() + 7);
+      return nextWeek;
+    }
+    
+    if (lowerMessage.includes('next month')) {
+      const nextMonth = new Date(currentDate);
+      nextMonth.setMonth(currentDate.getMonth() + 1);
+      return nextMonth;
+    }
+    
+    // Handle day references
+    const dayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+    const dayMatch = dayNames.find(day => lowerMessage.includes(day));
+    if (dayMatch) {
+      const targetDay = dayNames.indexOf(dayMatch);
+      const today = currentDate.getDay();
+      const daysUntilTarget = (targetDay + 7 - today) % 7 || 7; // If today, schedule for next week
+      const targetDate = new Date(currentDate);
+      targetDate.setDate(currentDate.getDate() + daysUntilTarget);
+      return targetDate;
+    }
+    
+    // Handle specific date formats
+    const datePatterns = [
+      // MM/DD/YYYY or MM-DD-YYYY
+      /(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/,
+      // DD/MM/YYYY or DD-MM-YYYY  
+      /(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/,
+      // Month DD, YYYY
+      /(january|february|march|april|may|june|july|august|september|october|november|december)\s+(\d{1,2}),?\s+(\d{4})/i,
+      // DD Month YYYY
+      /(\d{1,2})\s+(january|february|march|april|may|june|july|august|september|october|november|december)\s+(\d{4})/i,
+      // Month DD (current year)
+      /(january|february|march|april|may|june|july|august|september|october|november|december)\s+(\d{1,2})/i,
+    ];
+    
+    for (const pattern of datePatterns) {
+      const match = message.match(pattern);
+      if (match) {
+        let year, month, day;
+        
+        if (pattern.source.includes('january|february')) {
+          // Month name patterns
+          const monthNames = ['january', 'february', 'march', 'april', 'may', 'june', 
+                             'july', 'august', 'september', 'october', 'november', 'december'];
+          if (match[3]) {
+            // Month DD, YYYY or DD Month YYYY
+            if (isNaN(Number(match[1]))) {
+              // Month DD, YYYY
+              month = monthNames.indexOf(match[1].toLowerCase());
+              day = parseInt(match[2]);
+              year = parseInt(match[3]);
+            } else {
+              // DD Month YYYY
+              day = parseInt(match[1]);
+              month = monthNames.indexOf(match[2].toLowerCase());
+              year = parseInt(match[3]);
+            }
+          } else {
+            // Month DD (current year)
+            month = monthNames.indexOf(match[1].toLowerCase());
+            day = parseInt(match[2]);
+            year = currentDate.getFullYear();
+            
+            // If the date has passed this year, assume next year
+            const testDate = new Date(year, month, day);
+            if (testDate < currentDate) {
+              year += 1;
+            }
+          }
+        } else {
+          // Numeric patterns MM/DD/YYYY
+          month = parseInt(match[1]) - 1; // JavaScript months are 0-indexed
+          day = parseInt(match[2]);
+          year = parseInt(match[3]);
+        }
+        
+        const parsedDate = new Date(year, month, day);
+        if (!isNaN(parsedDate.getTime())) {
+          return parsedDate;
+        }
+      }
+    }
+    
+    // Handle time if mentioned (for same day scheduling)
+    const timePattern = /(\d{1,2}):?(\d{2})?\s*(am|pm)/i;
+    const timeMatch = message.match(timePattern);
+    if (timeMatch) {
+      const scheduledDate = new Date(currentDate);
+      let hours = parseInt(timeMatch[1]);
+      const minutes = timeMatch[2] ? parseInt(timeMatch[2]) : 0;
+      const ampm = timeMatch[3].toLowerCase();
+      
+      if (ampm === 'pm' && hours !== 12) hours += 12;
+      if (ampm === 'am' && hours === 12) hours = 0;
+      
+      scheduledDate.setHours(hours, minutes, 0, 0);
+      
+      // If the time has passed today, schedule for tomorrow
+      if (scheduledDate < currentDate) {
+        scheduledDate.setDate(currentDate.getDate() + 1);
+      }
+      
+      return scheduledDate;
+    }
+    
+    return null; // No date found
+  };
+
   const extractTaskReferences = (message: string): string[] => {
     // Find all @mentions in the message
     const mentions = message.match(/@[\w\s-]+/g) || [];
@@ -855,56 +978,9 @@ export default function DashboardEnhanced() {
       }
     }
 
-    if (lowerMessage.includes('decision') || lowerMessage.includes('decide')) {
-      text = `I'll help you make this decision! Based on your workspace history:\n\n📊 **Similar Past Decisions:**\n• Q3 Marketing Budget (2 weeks ago) - Decided to focus on digital channels\n• Product Roadmap (1 month ago) - Prioritized AI features\n\n👥 **Recommended Experts to Consult:**\n• Sarah Chen (Product Strategy)\n• Marcus Rodriguez (Analytics)\n\n💡 **Key Considerations:**\nBased on past patterns, decisions in this area typically involve cross-team alignment and data validation.`;
-      context = {
-        relatedDecisions: ['Q3 Marketing Budget', 'Product Roadmap'],
-        suggestedExperts: ['Sarah Chen', 'Marcus Rodriguez'],
-      };
-    } else if (lowerMessage.includes('marketing') || lowerMessage.includes('campaign')) {
-      text = `📢 **Marketing Context Detected**\n\nI found relevant information from your workspace:\n\n⚠️ **Overlap Warning**: There's already an active marketing initiative in #marketing-team (started 3 days ago)\n\n📚 **Past Context:**\n• Last marketing campaign achieved 23% conversion\n• Budget constraints were discussed in Q4 planning\n\n🎯 **Suggested Next Steps:**\n1. Review existing campaign to avoid duplication\n2. Consult with Emily Watson (Marketing lead)\n3. Check available budget allocation`;
-      context = {
-        conflictWarning: 'Active marketing initiative detected in #marketing-team',
-        suggestedExperts: ['Emily Watson'],
-      };
-    } else if (lowerMessage.includes('team') || lowerMessage.includes('collaborate')) {
-      text = `👥 **Team Collaboration Insights**\n\nBased on your workspace patterns:\n\n🔥 **Most Active Collaborators:**\n• Sarah Chen - 34 interactions this month\n• Marcus Rodriguez - 28 interactions\n\n💡 **Expertise Mapping:**\n• For Engineering questions: Sarah Chen\n• For Design feedback: Marcus Rodriguez\n• For Analytics: Emily Watson\n\n⚡ **Flow State Alert:**\nSarah Chen is currently in deep work mode (started 2h ago). Consider async communication.`;
-      context = {
-        suggestedExperts: ['Sarah Chen', 'Marcus Rodriguez', 'Emily Watson'],
-      };
-    } else if (lowerMessage.includes('roadmap') || lowerMessage.includes('priority')) {
-      text = `🎯 **Roadmap Created Successfully!**\n\nI've generated a comprehensive roadmap view based on current priorities:\n\n📋 **Included Sections:**\n1. Company priorities and policies\n2. Strategic roadmap with timelines\n3. Team assignments and status tracking\n\n🔄 **Related Past Discussions:**\n• "Q4 Product Strategy" - 2 weeks ago\n• "Tech Stack Modernization" - 1 month ago\n\n✨ **The roadmap is now displayed in the main view. You can see:**\n• Launch AI-assisted onboarding\n• Enter two priority geographies\n• Migrate legacy services to modern cloud\n• Build enterprise GTM capabilities\n\n📊 **Switch to roadmap view to see the full interactive roadmap!**`;
-      context = {
-        relatedDecisions: ['Q4 Product Strategy', 'Tech Stack Modernization'],
-        conflictWarning: 'Timeline conflict detected',
-      };
-    } else if (lowerMessage.includes('schedule') || lowerMessage.includes('meeting') || lowerMessage.includes('event') || lowerMessage.includes('calendar')) {
-      text = `📅 **Event Created Successfully!**\n\nI've scheduled a new event for you:\n\n📋 **Event Details:**\n• Title: "${userMessage.split(' ').slice(0, 3).join(' ')}..."\n• Date: Today at ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}\n• Type: Meeting\n• Status: Scheduled\n\n✨ **The event is now displayed in the calendar view. You can see:**\n• Full calendar with all your events\n• Event details sidebar\n• Reminders and tasks\n\n📊 **Switch to calendar view to see your schedule!**`;
-      
-      // Create a new event in Firestore
-      const newEventData = {
-        title: userMessage.slice(0, 50) || 'New Meeting',
-        description: `AI-generated event from: "${userMessage}"`,
-        startTime: new Date(),
-        endTime: new Date(Date.now() + 3600000), // 1 hour later
-        location: 'To be determined',
-        attendees: [user?.email?.split('@')[0] || 'You'],
-        status: 'scheduled' as const,
-        type: 'meeting' as const,
-        tags: ['ai-generated'],
-        createdAt: new Date(),
-        updatedAt: new Date()
-      };
-      
-      // Save to Firestore (will automatically update local state via real-time listener)
-      createEventInFirestore(newEventData);
-      
-      context = {
-        relatedDecisions: ['Calendar Integration', 'AI Event Creation'],
-        conflictWarning: 'Event created - check calendar for details',
-      };
-    } else if ((lowerMessage.includes('draft') && lowerMessage.includes('email')) || (lowerMessage.includes('email') && lowerMessage.includes('@'))) {
-      // Email drafting functionality
+    // Check for email drafting requests - high priority
+    if (lowerMessage.includes('draft') && lowerMessage.includes('email')) {
+      // Email drafting functionality - only trigger when specifically asked to draft email
       const emailPattern = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/;
       const emailMatch = userMessage.match(emailPattern);
       const recipient = emailMatch ? emailMatch[0] : 'recipient@example.com';
@@ -975,6 +1051,147 @@ export default function DashboardEnhanced() {
         type: 'success',
         read: false
       });
+
+      return {
+        id: `msg-${Date.now()}-ai`,
+        text,
+        isUser: false,
+        timestamp: new Date(),
+        context,
+      };
+    }
+
+    // Task creation logic - check for task-related keywords with deadlines
+    if (lowerMessage.includes('task') || lowerMessage.includes('todo') || lowerMessage.includes('assign') || lowerMessage.includes('deadline')) {
+      // Parse the date from the user's message for task deadline
+      const parsedDeadline = parseMessageDate(userMessage);
+      const defaultDeadline = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // Default 1 week
+      const taskDeadline = parsedDeadline || defaultDeadline;
+      
+      // Extract task title from message
+      let taskTitle = userMessage;
+      const taskKeywords = ['create task', 'add task', 'new task', 'task:', 'todo:', 'assign'];
+      for (const keyword of taskKeywords) {
+        if (lowerMessage.includes(keyword)) {
+          taskTitle = userMessage.replace(new RegExp(keyword, 'i'), '').trim();
+          break;
+        }
+      }
+      
+      // Clean up the title
+      taskTitle = taskTitle.split(' ').slice(0, 8).join(' ') || 'New Task';
+      
+      // Create task in Firestore
+      const newTaskData = {
+        title: taskTitle,
+        description: `AI-generated task from: "${userMessage}"`,
+        status: 'pending',
+        priority: 'medium',
+        deadline: taskDeadline,
+        assignedTo: [user?.email?.split('@')[0] || 'You'],
+        tags: ['ai-generated'],
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+      
+      // Format deadline for display
+      const deadlineDisplay = parsedDeadline 
+        ? taskDeadline.toLocaleDateString() + ' at ' + taskDeadline.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        : taskDeadline.toLocaleDateString() + ' (default 1 week)';
+      
+      text = `✅ **Task Created Successfully!**\n\n📋 **Task Details:**\n• Title: "${taskTitle}"\n• Deadline: ${deadlineDisplay}\n• Priority: Medium\n• Status: Pending\n• Assigned to: You\n\n🎯 **Next Steps:**\n• View task in the tasks panel\n• Update priority or status as needed\n• Add more details or subtasks\n• Set reminders if necessary\n\n📊 **The task has been added to your workspace!**`;
+      
+      // Save to Firestore (this should trigger the real-time listener to update the UI)
+      // Note: You'll need to implement createTaskInFirestore similar to createEventInFirestore
+      try {
+        // For now, we'll add to local state - you should implement Firestore creation
+        const taskWithId = { ...newTaskData, id: `task-${Date.now()}` };
+        setTasks(prev => [...prev, taskWithId]);
+        
+        // Add notification
+        addNotification({
+          title: 'Task Created',
+          message: `New task "${taskTitle}" created with deadline ${taskDeadline.toLocaleDateString()}`,
+          type: 'success',
+          read: false
+        });
+      } catch (error) {
+        console.error('Error creating task:', error);
+      }
+      
+      context = {
+        relatedDecisions: ['Task Management', 'AI Task Creation'],
+        taskDetails: newTaskData,
+        conflictWarning: 'Task created - check tasks panel for details',
+      };
+      
+      return {
+        id: `msg-${Date.now()}-ai`,
+        text,
+        isUser: false,
+        timestamp: new Date(),
+        context,
+      };
+    }
+
+    if (lowerMessage.includes('decision') || lowerMessage.includes('decide')) {
+      text = `I'll help you make this decision! Based on your workspace history:\n\n📊 **Similar Past Decisions:**\n• Q3 Marketing Budget (2 weeks ago) - Decided to focus on digital channels\n• Product Roadmap (1 month ago) - Prioritized AI features\n\n👥 **Recommended Experts to Consult:**\n• Sarah Chen (Product Strategy)\n• Marcus Rodriguez (Analytics)\n\n💡 **Key Considerations:**\nBased on past patterns, decisions in this area typically involve cross-team alignment and data validation.`;
+      context = {
+        relatedDecisions: ['Q3 Marketing Budget', 'Product Roadmap'],
+        suggestedExperts: ['Sarah Chen', 'Marcus Rodriguez'],
+      };
+    } else if (lowerMessage.includes('marketing') || lowerMessage.includes('campaign')) {
+      text = `📢 **Marketing Context Detected**\n\nI found relevant information from your workspace:\n\n⚠️ **Overlap Warning**: There's already an active marketing initiative in #marketing-team (started 3 days ago)\n\n📚 **Past Context:**\n• Last marketing campaign achieved 23% conversion\n• Budget constraints were discussed in Q4 planning\n\n🎯 **Suggested Next Steps:**\n1. Review existing campaign to avoid duplication\n2. Consult with Emily Watson (Marketing lead)\n3. Check available budget allocation`;
+      context = {
+        conflictWarning: 'Active marketing initiative detected in #marketing-team',
+        suggestedExperts: ['Emily Watson'],
+      };
+    } else if (lowerMessage.includes('team') || lowerMessage.includes('collaborate')) {
+      text = `👥 **Team Collaboration Insights**\n\nBased on your workspace patterns:\n\n🔥 **Most Active Collaborators:**\n• Sarah Chen - 34 interactions this month\n• Marcus Rodriguez - 28 interactions\n\n💡 **Expertise Mapping:**\n• For Engineering questions: Sarah Chen\n• For Design feedback: Marcus Rodriguez\n• For Analytics: Emily Watson\n\n⚡ **Flow State Alert:**\nSarah Chen is currently in deep work mode (started 2h ago). Consider async communication.`;
+      context = {
+        suggestedExperts: ['Sarah Chen', 'Marcus Rodriguez', 'Emily Watson'],
+      };
+    } else if (lowerMessage.includes('roadmap') || lowerMessage.includes('priority')) {
+      text = `🎯 **Roadmap Created Successfully!**\n\nI've generated a comprehensive roadmap view based on current priorities:\n\n📋 **Included Sections:**\n1. Company priorities and policies\n2. Strategic roadmap with timelines\n3. Team assignments and status tracking\n\n🔄 **Related Past Discussions:**\n• "Q4 Product Strategy" - 2 weeks ago\n• "Tech Stack Modernization" - 1 month ago\n\n✨ **The roadmap is now displayed in the main view. You can see:**\n• Launch AI-assisted onboarding\n• Enter two priority geographies\n• Migrate legacy services to modern cloud\n• Build enterprise GTM capabilities\n\n📊 **Switch to roadmap view to see the full interactive roadmap!**`;
+      context = {
+        relatedDecisions: ['Q4 Product Strategy', 'Tech Stack Modernization'],
+        conflictWarning: 'Timeline conflict detected',
+      };
+    } else if (lowerMessage.includes('schedule') || lowerMessage.includes('meeting') || lowerMessage.includes('event') || lowerMessage.includes('calendar')) {
+      // Parse the date from the user's message
+      const parsedDate = parseMessageDate(userMessage);
+      const scheduledDate = parsedDate || new Date(); // Fallback to current date if no date found
+      const endTime = new Date(scheduledDate.getTime() + 3600000); // 1 hour later
+      
+      // Format the date for display
+      const dateDisplay = parsedDate 
+        ? scheduledDate.toLocaleDateString() + ' at ' + scheduledDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        : 'Today at ' + scheduledDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      
+      text = `📅 **Event Created Successfully!**\n\nI've scheduled a new event for you:\n\n📋 **Event Details:**\n• Title: "${userMessage.split(' ').slice(0, 3).join(' ')}..."\n• Date: ${dateDisplay}\n• Type: Meeting\n• Status: Scheduled\n\n✨ **The event is now displayed in the calendar view. You can see:**\n• Full calendar with all your events\n• Event details sidebar\n• Reminders and tasks\n\n📊 **Switch to calendar view to see your schedule!**`;
+      
+      // Create a new event in Firestore
+      const newEventData = {
+        title: userMessage.slice(0, 50) || 'New Meeting',
+        description: `AI-generated event from: "${userMessage}"`,
+        startTime: scheduledDate,
+        endTime: endTime,
+        location: 'To be determined',
+        attendees: [user?.email?.split('@')[0] || 'You'],
+        status: 'scheduled' as const,
+        type: 'meeting' as const,
+        tags: ['ai-generated'],
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+      
+      // Save to Firestore (will automatically update local state via real-time listener)
+      createEventInFirestore(newEventData);
+      
+      context = {
+        relatedDecisions: ['Calendar Integration', 'AI Event Creation'],
+        conflictWarning: 'Event created - check calendar for details',
+      };
     } else if (lowerMessage.includes('send email') || (lowerMessage.includes('email') && lowerMessage.includes('to'))) {
       // Email sending functionality
       const emailPattern = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/;
@@ -1323,7 +1540,7 @@ export default function DashboardEnhanced() {
                 <div>
                   <h1 className="text-3xl font-bold text-black">
                     {currentView === 'roadmap' ? 'Roadmap View' : 
-                     currentView === 'calendar' ? 'Calendar View' : 
+                     currentView === 'calendar' ? 'REMO.ai' : 
                      currentPageData?.title}
                   </h1>
                   {currentView === 'roadmap' ? (
@@ -1521,7 +1738,7 @@ export default function DashboardEnhanced() {
                             <div className="w-8 h-8 bg-black rounded-xl flex items-center justify-center shadow-sm">
                               <Brain className="w-5 h-5 text-white" />
                             </div>
-                            <span className="font-bold text-black text-sm">Bombil AI</span>
+                            <span className="font-bold text-black text-sm">REMO.ai AI</span>
                           </div>
                         )}
                         <p className={`whitespace-pre-line text-sm leading-relaxed font-medium ${msg.isUser ? 'text-white' : 'text-gray-900'}`}>
@@ -1647,7 +1864,7 @@ export default function DashboardEnhanced() {
                       <div className="w-8 h-8 bg-black rounded-xl flex items-center justify-center shadow-sm">
                         <Brain className="w-5 h-5 text-white animate-pulse" />
                       </div>
-                      <span className="text-gray-800 text-sm font-bold">Bombil is thinking...</span>
+                      <span className="text-gray-800 text-sm font-bold">REMO.ai is thinking...</span>
                       <div className="flex gap-1.5">
                         <div className="w-2 h-2 bg-black rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
                         <div className="w-2 h-2 bg-black rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
@@ -1852,9 +2069,9 @@ export default function DashboardEnhanced() {
             <div className="max-w-7xl mx-auto px-8 py-8">
               <div className="space-y-8">
                 {/* Calendar and Events Row */}
-                <div className="grid lg:grid-cols-4 gap-8">
+                <div className="grid lg:grid-cols-4 gap-8 ">
                   {/* Calendar Section */}
-                  <div className="lg:col-span-1">
+                  <div className="lg:col-span-1 ">
                     <div className="bg-white rounded-2xl border-2 border-gray-200 shadow-lg">
                       {/* Calendar Header */}
                       <div className="px-4 py-4 border-b border-gray-100">

@@ -99,7 +99,7 @@ def test_roadmap():
         return False
 
 def main():
-    print("🧪 Bombil AI Backend Test Suite")
+    print("🧪 REMO.ai AI Backend Test Suite")
     print("=" * 40)
     
     # Test all endpoints

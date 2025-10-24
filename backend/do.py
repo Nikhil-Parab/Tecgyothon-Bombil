@@ -787,6 +787,224 @@ def handle_gmail_action(query: str) -> Dict:
             return result
 
 
+# -----------------------
+# ENHANCED EMAIL FUNCTIONS WITH DYNAMIC CHAT INTEGRATION
+# -----------------------
+
+def send_dynamic_reply(to_email: str, subject: str, original_body: str, user_message: str = "", user_name: str = "Assistant"):
+    """Send a dynamic reply with user-specific content from chat."""
+    # Extract custom message from user input
+    custom_message = ""
+    if user_message:
+        # Remove common email keywords to get the actual message
+        keywords_to_remove = ["reply to", "send reply", "respond to", "reply", "email", "message"]
+        clean_message = user_message.lower()
+        for keyword in keywords_to_remove:
+            clean_message = clean_message.replace(keyword, "").strip()
+        
+        if len(clean_message) > 10:  # If there's substantial content
+            custom_message = user_message
+    
+    # Generate dynamic reply body
+    if custom_message:
+        reply_body = (
+            f"Hi,\n\n"
+            f"{custom_message}\n\n"
+            f"Thanks for your email regarding '{subject}'.\n\n"
+            f"Original message preview:\n{original_body[:150]}...\n\n"
+            f"Best regards,\n{user_name}"
+        )
+    else:
+        reply_body = (
+            f"Hi,\n\n"
+            f"Thanks for your email regarding '{subject}'.\n"
+            f"I've received your message and will get back to you soon.\n\n"
+            f"Original message preview:\n{original_body[:150]}...\n\n"
+            f"Best regards,\n{user_name}"
+        )
+
+    msg = MIMEMultipart()
+    msg["From"] = GMAIL_ADDRESS
+    msg["To"] = to_email
+    msg["Subject"] = f"Re: {subject}"
+    msg.attach(MIMEText(reply_body, "plain"))
+
+    try:
+        server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
+        server.login(GMAIL_ADDRESS, GMAIL_APP_PASSWORD)
+        server.send_message(msg)
+        server.quit()
+        return {
+            "status": "success",
+            "action": "reply_sent",
+            "recipient": to_email,
+            "subject": f"Re: {subject}",
+            "body": reply_body
+        }
+    except Exception as e:
+        return {
+            "status": "failed",
+            "error": str(e)
+        }
+
+
+def create_email_draft(to_email: str, subject: str, body_content: str, user_name: str = "Assistant"):
+    """Create an email draft with dynamic content from chat."""
+    
+    # Enhance body content with professional formatting
+    if not body_content or len(body_content.strip()) < 10:
+        body_content = "Please provide the message content for this email."
+    
+    formatted_body = (
+        f"Hi,\n\n"
+        f"{body_content}\n\n"
+        f"Best regards,\n{user_name}"
+    )
+    
+    return {
+        "status": "draft_created",
+        "action": "draft",
+        "recipient": to_email,
+        "subject": subject,
+        "body": formatted_body,
+        "timestamp": datetime.now().isoformat()
+    }
+
+
+def process_email_from_chat(chat_message: str, user_name: str = "Assistant", user_email: str = ""):
+    """Process email-related requests from chat messages with dynamic content."""
+    
+    # Extract email action type
+    action_type = "unknown"
+    if any(word in chat_message.lower() for word in ["reply", "respond to"]):
+        action_type = "reply"
+    elif "draft" in chat_message.lower():
+        action_type = "draft"
+    elif "send" in chat_message.lower():
+        action_type = "send"
+    
+    # Extract recipient email
+    recipient = extract_email_address(chat_message)
+    if not recipient:
+        return {
+            "status": "failed",
+            "error": "No recipient email address found in message"
+        }
+    
+    # Extract subject
+    subject = "Message from AI Assistant"
+    subject_patterns = [
+        r"(?:with\s+)?subject[:\s]+([^,\n]+?)(?:\s+(?:saying|body|about|regarding)|$)",
+        r"subject[:\s]+[\"']([^\"']+)[\"']",
+        r"about\s+([^,\n]+?)(?:\s+(?:saying|body|to)|$)"
+    ]
+    
+    for pattern in subject_patterns:
+        match = re.search(pattern, chat_message, re.IGNORECASE)
+        if match:
+            subject = match.group(1).strip()
+            break
+    
+    # Extract body content
+    body = ""
+    body_patterns = [
+        r"(?:saying|body|message|content)[:\s]+(.+?)$",
+        r"(?:about|regarding)[:\s]+(.+?)$"
+    ]
+    
+    for pattern in body_patterns:
+        match = re.search(pattern, chat_message, re.IGNORECASE)
+        if match:
+            body = match.group(1).strip()
+            break
+    
+    # If no explicit body found, extract from remaining text
+    if not body:
+        # Remove email address, subject, and action keywords
+        body = chat_message
+        for keyword in ["draft email", "send email", "email", recipient, "subject:", subject]:
+            body = body.replace(keyword, "", 1)
+        body = re.sub(r'\s+', ' ', body).strip()
+    
+    # Process based on action type
+    if action_type == "reply":
+        # Fetch recent emails to find the one to reply to
+        emails = fetch_gmail(limit=10)
+        if not emails:
+            return {"status": "failed", "error": "No emails found to reply to"}
+        
+        # Find email from the specified sender or most recent
+        target_email = None
+        for email_data in emails:
+            sender_in_email = extract_email_address(email_data['from'])
+            if sender_in_email == recipient:
+                target_email = email_data
+                break
+        
+        if not target_email:
+            target_email = emails[0]  # Use most recent if specific sender not found
+        
+        return send_dynamic_reply(
+            to_email=recipient,
+            subject=target_email['subject'],
+            original_body=target_email['body'],
+            user_message=body,
+            user_name=user_name
+        )
+    
+    elif action_type == "draft":
+        return create_email_draft(
+            to_email=recipient,
+            subject=subject,
+            body_content=body,
+            user_name=user_name
+        )
+    
+    elif action_type == "send":
+        # Create and send email immediately
+        draft = create_email_draft(recipient, subject, body, user_name)
+        if draft["status"] == "draft_created":
+            result = send_gmail(recipient, subject, draft["body"])
+            result["action"] = "sent"
+            return result
+        else:
+            return draft
+    
+    else:
+        return {
+            "status": "failed",
+            "error": "Could not determine email action type from message"
+        }
+
+
+def get_email_summary_for_chat(limit: int = 5) -> Dict:
+    """Get a summary of recent emails formatted for chat display."""
+    emails = fetch_gmail(limit=limit)
+    
+    if not emails:
+        return {
+            "status": "no_emails",
+            "message": "📭 No emails found in inbox."
+        }
+    
+    summary = {
+        "status": "success",
+        "email_count": len(emails),
+        "emails": []
+    }
+    
+    for i, email_data in enumerate(emails, 1):
+        summary["emails"].append({
+            "number": i,
+            "from": email_data["from"],
+            "subject": email_data["subject"],
+            "preview": email_data["body"][:100] + "..." if len(email_data["body"]) > 100 else email_data["body"],
+            "date": email_data["date"]
+        })
+    
+    return summary
+
+
 def create_firebase_roadmap(query: str, user_id: str = "dPYFilBStodR8Q8IwBXv8CyWHLB2"):
     """Create roadmap in Firebase"""
     if not db:
@@ -1120,7 +1338,189 @@ def format_response(response_text: str, intents_detected: List[Dict], intents_ex
 # -----------------------
 # MAIN AGENT
 # -----------------------
+
+
+# -----------------------
+# EMAIL INTERFACE - MAIN EXECUTION
+# -----------------------
+def email_interface():
+    """Interactive email interface similar to your example."""
+    print("📧 Welcome to Dynamic Email Manager!")
+    print("Commands: 'inbox', 'reply', 'draft', 'send', 'quit'")
+    print("="*50)
+    
+    while True:
+        try:
+            command = input("\n📧 Enter command (inbox/reply/draft/send/quit): ").strip().lower()
+            
+            if command == "quit":
+                print("👋 Goodbye!")
+                break
+                
+            elif command == "inbox":
+                emails = fetch_gmail(limit=10)
+                if not emails:
+                    print("📭 No emails found.")
+                    continue
+                
+                print(f"\n📧 Found {len(emails)} emails:")
+                for i, mail in enumerate(emails, 1):
+                    print(f"\n--- Email {i} ---")
+                    print(f"From: {mail['from']}")
+                    print(f"Subject: {mail['subject']}")
+                    print(f"Preview: {mail['body'][:120]}...")
+                    print(f"Date: {mail['date']}")
+                
+            elif command == "reply":
+                emails = fetch_gmail(limit=5)
+                if not emails:
+                    print("📭 No emails found to reply to.")
+                    continue
+                
+                print("\n📧 Recent emails to reply to:")
+                for i, mail in enumerate(emails, 1):
+                    print(f"{i}. From: {mail['from']} | Subject: {mail['subject'][:30]}...")
+                
+                try:
+                    choice = int(input("Select email number to reply to: ")) - 1
+                    if 0 <= choice < len(emails):
+                        selected_email = emails[choice]
+                        
+                        print(f"\nReplying to: {selected_email['subject']}")
+                        user_name = input("Your name (default: Assistant): ").strip() or "Assistant"
+                        reply_message = input("Your reply message: ").strip()
+                        
+                        if reply_message:
+                            sender_email = extract_email_address(selected_email['from'])
+                            if sender_email:
+                                result = send_dynamic_reply(
+                                    to_email=sender_email,
+                                    subject=selected_email['subject'],
+                                    original_body=selected_email['body'],
+                                    user_message=reply_message,
+                                    user_name=user_name
+                                )
+                                
+                                if result['status'] == 'success':
+                                    print(f"✅ Reply sent to {sender_email}")
+                                else:
+                                    print(f"❌ Failed to send reply: {result.get('error', 'Unknown error')}")
+                            else:
+                                print("❌ Could not extract sender email address.")
+                        else:
+                            print("❌ No reply message provided.")
+                    else:
+                        print("❌ Invalid email selection.")
+                except (ValueError, IndexError):
+                    print("❌ Invalid selection.")
+                    
+            elif command == "draft":
+                print("\n📝 Create Email Draft")
+                to_email = input("Recipient email: ").strip()
+                subject = input("Subject: ").strip()
+                body = input("Message body: ").strip()
+                user_name = input("Your name (default: Assistant): ").strip() or "Assistant"
+                
+                if to_email and subject and body:
+                    draft = create_email_draft(to_email, subject, body, user_name)
+                    print(f"\n✅ Draft created:")
+                    print(f"To: {draft['recipient']}")
+                    print(f"Subject: {draft['subject']}")
+                    print(f"Body:\n{draft['body']}")
+                    
+                    send_now = input("\nSend this email now? (y/n): ").strip().lower()
+                    if send_now == 'y':
+                        result = send_gmail(draft['recipient'], draft['subject'], draft['body'])
+                        if result['status'] == 'success':
+                            print("✅ Email sent successfully!")
+                        else:
+                            print(f"❌ Failed to send: {result.get('error', 'Unknown error')}")
+                else:
+                    print("❌ All fields are required.")
+                    
+            elif command == "send":
+                print("\n📤 Send Email")
+                to_email = input("Recipient email: ").strip()
+                subject = input("Subject: ").strip()
+                body = input("Message body: ").strip()
+                user_name = input("Your name (default: Assistant): ").strip() or "Assistant"
+                
+                if to_email and subject and body:
+                    # Format the body
+                    formatted_body = (
+                        f"Hi,\n\n"
+                        f"{body}\n\n"
+                        f"Best regards,\n{user_name}"
+                    )
+                    
+                    result = send_gmail(to_email, subject, formatted_body)
+                    if result['status'] == 'success':
+                        print(f"✅ Email sent to {to_email}")
+                    else:
+                        print(f"❌ Failed to send: {result.get('error', 'Unknown error')}")
+                else:
+                    print("❌ All fields are required.")
+                    
+            else:
+                print("❌ Unknown command. Use: inbox, reply, draft, send, quit")
+                
+        except KeyboardInterrupt:
+            print("\n\n👋 Goodbye!")
+            break
+        except Exception as e:
+            print(f"\n❌ Error: {e}")
+
+
+def test_email_functions():
+    """Test the enhanced email functions."""
+    print("🧪 Testing Email Functions")
+    print("="*30)
+    
+    # Test 1: Chat-based email processing
+    test_messages = [
+        "draft email to john@example.com subject Meeting Update saying We need to reschedule our meeting to next week",
+        "send email to sarah@company.com about Project Status saying The project is on track and will be delivered on time",
+        "reply to latest email saying Thank you for your message, I'll get back to you soon"
+    ]
+    
+    print("\n📝 Testing chat-based email processing:")
+    for i, message in enumerate(test_messages, 1):
+        print(f"\nTest {i}: {message}")
+        result = process_email_from_chat(message, user_name="Test User")
+        print(f"Result: {result['status']}")
+        if result['status'] != 'failed':
+            print(f"Action: {result.get('action', 'unknown')}")
+            if 'recipient' in result:
+                print(f"To: {result['recipient']}")
+            if 'subject' in result:
+                print(f"Subject: {result['subject']}")
+    
+    # Test 2: Email summary
+    print(f"\n📧 Testing email summary:")
+    summary = get_email_summary_for_chat(limit=3)
+    print(f"Status: {summary['status']}")
+    if summary['status'] == 'success':
+        print(f"Found {summary['email_count']} emails")
+
+
 if __name__ == "__main__":
+    print("📧 Dynamic Email Manager with Chat Integration")
+    print("="*50)
+    
+    choice = input("Choose mode:\n1. Interactive Email Interface\n2. Test Functions\n3. Regular Chat Interface\nEnter choice (1/2/3): ").strip()
+    
+    if choice == "1":
+        email_interface()
+    elif choice == "2":
+        test_email_functions()
+    elif choice == "3":
+        interactive_agent()  # Original interactive function
+    else:
+            print("Invalid choice. Starting email interface...")
+            email_interface()
+
+def interactive_agent():
+    """Original interactive agent function."""
     print("\n" + "="*70)
     print("🚀 AI Agent with Natural Knowledge Responses")
     print("="*70)
@@ -1142,7 +1542,7 @@ if __name__ == "__main__":
             
             print("\n" + "="*70)
             
-            # Detect intents
+            # Detect intents - returns a tuple
             structured_intents, intent_scores = detect_intents(query)
             
             intents_detected = []
@@ -1204,3 +1604,6 @@ if __name__ == "__main__":
             import traceback
             traceback.print_exc()
         continue
+
+
+# Original main execution - now moved to prevent conflicts

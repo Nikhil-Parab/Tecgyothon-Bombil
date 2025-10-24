@@ -39,8 +39,8 @@ Modern teams are overwhelmed by information spread across emails, chats, and mee
 
 ```bash
 # Clone and install
-git clone https://github.com/Nikhil-Parab/Tecgyothon-Bombil.git
-cd Tecgyothon-Bombil/frontend
+git clone https://github.com/Nikhil-Parab/Tecgyothon-REMO.ai.git
+cd Tecgyothon-REMO.ai/frontend
 bun install  # or npm install
 
 # Run development server
@@ -176,6 +176,6 @@ Just follow `SETUP_GUIDE.md` → Choose Supabase or custom backend → Connect �
 
 **Made with 🧠 and ⚡**
 
-[Documentation](./SETUP_GUIDE.md) • [Database Schema](./DATABASE_SCHEMA.md) • [Report Issue](https://github.com/Nikhil-Parab/Tecgyothon-Bombil/issues)
+[Documentation](./SETUP_GUIDE.md) • [Database Schema](./DATABASE_SCHEMA.md) • [Report Issue](https://github.com/Nikhil-Parab/Tecgyothon-REMO.ai/issues)
 
 </div>

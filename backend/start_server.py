@@ -11,7 +11,7 @@ backend_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, backend_dir)
 
 if __name__ == "__main__":
-    print("🚀 Starting Bombil AI Backend Server...")
+    print("🚀 Starting REMO.ai AI Backend Server...")
     print("📡 Server will be available at: http://localhost:8000")
     print("📋 API endpoints:")
     print("   - GET  /health - Backend health check")

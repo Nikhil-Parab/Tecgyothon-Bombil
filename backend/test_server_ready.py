@@ -9,7 +9,7 @@ import os
 backend_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, backend_dir)
 
-print("🚀 Testing Bombil AI Backend Server Import...")
+print("🚀 Testing REMO.ai AI Backend Server Import...")
 
 try:
     # This is the same import that was failing

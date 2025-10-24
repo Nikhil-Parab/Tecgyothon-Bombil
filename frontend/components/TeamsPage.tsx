@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Users,
   Plus,
@@ -41,7 +41,6 @@ import {
   query,
   where,
   onSnapshot,
-  orderBy,
   serverTimestamp,
   updateDoc,
   doc,
@@ -111,6 +110,9 @@ export default function TeamsPage() {
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
   const [activeTab, setActiveTab] = useState<'overview' | 'chat' | 'tasks' | 'members' | 'settings'>('overview');
   
+  // Chat scroll ref
+  const chatMessagesRef = useRef<HTMLDivElement>(null);
+  
   // Teams State
   const [teams, setTeams] = useState<Team[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -127,6 +129,7 @@ export default function TeamsPage() {
   // Chat State
   const [chatMessages, setChatMessages] = useState<TeamChat[]>([]);
   const [newMessage, setNewMessage] = useState('');
+  const [chatLoading, setChatLoading] = useState(false);
   
   // Tasks State
   const [teamTasks, setTeamTasks] = useState<TeamTask[]>([]);
@@ -149,11 +152,7 @@ export default function TeamsPage() {
 
     const teamsQuery = query(
       collection(db, 'teams'),
-      where('members', 'array-contains', {
-        id: user.uid,
-        email: user.email,
-        displayName: user.displayName || user.email
-      })
+      where('memberIds', 'array-contains', user.uid)
     );
 
     const unsubscribe = onSnapshot(teamsQuery, (snapshot) => {
@@ -173,23 +172,50 @@ export default function TeamsPage() {
   useEffect(() => {
     if (!selectedTeam?.id) return;
 
+    console.log('Loading chat messages for team:', selectedTeam.id);
+
+    // Simplified query without orderBy to avoid index requirements
     const chatQuery = query(
       collection(db, 'teamChats'),
-      where('teamId', '==', selectedTeam.id),
-      orderBy('timestamp', 'asc')
+      where('teamId', '==', selectedTeam.id)
     );
 
-    const unsubscribe = onSnapshot(chatQuery, (snapshot) => {
-      const messages = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-        timestamp: doc.data().timestamp?.toDate() || new Date()
-      })) as TeamChat[];
-      setChatMessages(messages);
-    });
+    const unsubscribe = onSnapshot(chatQuery, 
+      (snapshot) => {
+        console.log('Chat snapshot received:', snapshot.docs.length, 'messages');
+        const messages = snapshot.docs.map(doc => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            ...data,
+            timestamp: data.timestamp?.toDate() || new Date()
+          };
+        }) as TeamChat[];
+        
+        // Sort messages by timestamp on client side
+        const sortedMessages = messages.sort((a, b) => 
+          (a.timestamp?.getTime() || 0) - (b.timestamp?.getTime() || 0)
+        );
+        
+        setChatMessages(sortedMessages);
+        console.log('Chat messages updated:', sortedMessages);
+      },
+      (error) => {
+        console.error('Error loading chat messages:', error);
+        // Set empty array on error to prevent UI crashes
+        setChatMessages([]);
+      }
+    );
 
     return () => unsubscribe();
   }, [selectedTeam?.id]);
+
+  // Scroll to bottom when new messages arrive
+  useEffect(() => {
+    if (chatMessagesRef.current) {
+      chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
+    }
+  }, [chatMessages]);
 
   // Load team tasks
   useEffect(() => {
@@ -197,19 +223,30 @@ export default function TeamsPage() {
 
     const tasksQuery = query(
       collection(db, 'teamTasks'),
-      where('teamId', '==', selectedTeam.id),
-      orderBy('createdAt', 'desc')
+      where('teamId', '==', selectedTeam.id)
     );
 
     const unsubscribe = onSnapshot(tasksQuery, (snapshot) => {
-      const tasks = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-        createdAt: doc.data().createdAt?.toDate() || new Date(),
-        updatedAt: doc.data().updatedAt?.toDate() || new Date(),
-        deadline: doc.data().deadline?.toDate()
-      })) as TeamTask[];
-      setTeamTasks(tasks);
+      try {
+        const tasks = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+          createdAt: doc.data().createdAt?.toDate() || new Date(),
+          updatedAt: doc.data().updatedAt?.toDate() || new Date(),
+          deadline: doc.data().deadline?.toDate()
+        })) as TeamTask[];
+        
+        // Sort tasks by createdAt (newest first) on client side to avoid composite index
+        tasks.sort((a, b) => (b.createdAt?.getTime() || 0) - (a.createdAt?.getTime() || 0));
+        
+        setTeamTasks(tasks);
+      } catch (error) {
+        console.error('Error processing team tasks:', error);
+        setTeamTasks([]);
+      }
+    }, (error) => {
+      console.error('Error loading team tasks:', error);
+      setTeamTasks([]);
     });
 
     return () => unsubscribe();
@@ -223,12 +260,13 @@ export default function TeamsPage() {
         name: newTeam.name.trim(),
         description: newTeam.description.trim(),
         ownerId: user.uid,
+        memberIds: [user.uid],
         members: [{
           id: user.uid,
           email: user.email,
           displayName: user.displayName || user.email,
           role: 'owner' as const,
-          joinedAt: serverTimestamp(),
+          joinedAt: new Date(),
           status: 'active' as const
         }],
         createdAt: serverTimestamp(),
@@ -259,21 +297,40 @@ export default function TeamsPage() {
   };
 
   const sendMessage = async () => {
-    if (!selectedTeam?.id || !newMessage.trim() || !user) return;
+    if (!selectedTeam?.id || !newMessage.trim() || !user) {
+      console.log('SendMessage validation failed:', {
+        teamId: selectedTeam?.id,
+        message: newMessage.trim(),
+        user: !!user
+      });
+      return;
+    }
 
+    setChatLoading(true);
     try {
-      await addDoc(collection(db, 'teamChats'), {
+      console.log('Sending message:', {
         teamId: selectedTeam.id,
         message: newMessage.trim(),
         senderId: user.uid,
-        senderName: user.displayName || user.email,
+        senderName: user.displayName || user.email
+      });
+
+      const docRef = await addDoc(collection(db, 'teamChats'), {
+        teamId: selectedTeam.id,
+        message: newMessage.trim(),
+        senderId: user.uid,
+        senderName: user.displayName || user.email || 'Unknown User',
         timestamp: serverTimestamp(),
         type: 'message'
       });
 
+      console.log('Message sent successfully:', docRef.id);
       setNewMessage('');
     } catch (error) {
       console.error('Error sending message:', error);
+      alert('Failed to send message. Please try again.');
+    } finally {
+      setChatLoading(false);
     }
   };
 
@@ -330,12 +387,13 @@ export default function TeamsPage() {
         email: newMemberEmail.trim(),
         displayName: newMemberEmail.trim(),
         role: 'member' as const,
-        joinedAt: serverTimestamp(),
+        joinedAt: new Date(),
         status: 'active' as const
       };
 
       await updateDoc(doc(db, 'teams', selectedTeam.id), {
         members: arrayUnion(newMember),
+        memberIds: arrayUnion(newMemberEmail),
         updatedAt: serverTimestamp()
       });
 
@@ -835,43 +893,56 @@ export default function TeamsPage() {
                         <div className="flex items-center space-x-2">
                           <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                           <span className="text-sm text-gray-600">{selectedTeam.members.length} members</span>
+                          {user && (
+                            <span className="text-xs text-gray-500">• {user.displayName || user.email}</span>
+                          )}
                         </div>
                       </div>
                     </div>
 
                     {/* Messages */}
-                    <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                      {chatMessages.map((message) => (
-                        <div
-                          key={message.id}
-                          className={`flex items-start space-x-3 ${
-                            message.senderId === user?.uid ? 'flex-row-reverse space-x-reverse' : ''
-                          }`}
-                        >
-                          <div className="w-8 h-8 rounded-full bg-black flex items-center justify-center text-white text-sm font-bold shrink-0">
-                            {message.senderName[0]?.toUpperCase()}
-                          </div>
-                          <div className={`max-w-xs lg:max-w-md ${message.senderId === user?.uid ? 'text-right' : ''}`}>
-                            <div className="flex items-center space-x-2 mb-1">
-                              <span className="text-sm font-medium text-gray-900">{message.senderName}</span>
-                              <span className="text-xs text-gray-500">
-                                {message.timestamp.toLocaleTimeString()}
-                              </span>
-                            </div>
-                            <div
-                              className={`inline-block p-3 rounded-lg ${
-                                message.senderId === user?.uid
-                                  ? 'bg-black text-white'
-                                  : message.type === 'system'
-                                  ? 'bg-gray-100 text-gray-700 italic'
-                                  : 'bg-gray-100 text-gray-900'
-                              }`}
-                            >
-                              {message.message}
-                            </div>
+                    <div ref={chatMessagesRef} className="flex-1 overflow-y-auto p-4 space-y-4">
+                      {chatMessages.length === 0 ? (
+                        <div className="flex items-center justify-center h-full text-gray-500">
+                          <div className="text-center">
+                            <MessageSquare className="w-12 h-12 mx-auto mb-4 text-gray-300" />
+                            <p className="text-lg font-medium mb-2">No messages yet</p>
+                            <p className="text-sm">Start the conversation by sending a message below</p>
                           </div>
                         </div>
-                      ))}
+                      ) : (
+                        chatMessages.map((message) => (
+                          <div
+                            key={message.id}
+                            className={`flex items-start space-x-3 ${
+                              message.senderId === user?.uid ? 'flex-row-reverse space-x-reverse' : ''
+                            }`}
+                          >
+                            <div className="w-8 h-8 rounded-full bg-black flex items-center justify-center text-white text-sm font-bold shrink-0">
+                              {message.senderName?.[0]?.toUpperCase() || 'U'}
+                            </div>
+                            <div className={`max-w-xs lg:max-w-md ${message.senderId === user?.uid ? 'text-right' : ''}`}>
+                              <div className="flex items-center space-x-2 mb-1">
+                                <span className="text-sm font-medium text-gray-900">{message.senderName || 'Unknown User'}</span>
+                                <span className="text-xs text-gray-500">
+                                  {message.timestamp?.toLocaleTimeString() || 'Now'}
+                                </span>
+                              </div>
+                              <div
+                                className={`inline-block p-3 rounded-lg ${
+                                  message.senderId === user?.uid
+                                    ? 'bg-black text-white'
+                                    : message.type === 'system'
+                                    ? 'bg-gray-100 text-gray-700 italic'
+                                    : 'bg-gray-100 text-gray-900'
+                                }`}
+                              >
+                                {message.message}
+                              </div>
+                            </div>
+                          </div>
+                        ))
+                      )}
                     </div>
 
                     {/* Message Input */}
@@ -881,16 +952,34 @@ export default function TeamsPage() {
                           type="text"
                           value={newMessage}
                           onChange={(e) => setNewMessage(e.target.value)}
-                          onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' && !e.shiftKey) {
+                              e.preventDefault();
+                              sendMessage();
+                            }
+                          }}
                           placeholder="Type a message..."
                           className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
                         />
                         <button
+                          onClick={() => {
+                            setNewMessage('Hello, this is a test message!');
+                          }}
+                          className="px-2 py-2 text-gray-600 hover:text-gray-800 rounded-lg transition-colors"
+                          title="Test message"
+                        >
+                          <MessageSquare className="w-4 h-4" />
+                        </button>
+                        <button
                           onClick={sendMessage}
-                          disabled={!newMessage.trim()}
+                          disabled={!newMessage.trim() || chatLoading}
                           className="px-4 py-2 bg-black text-white hover:bg-gray-800 disabled:bg-gray-300 disabled:cursor-not-allowed rounded-lg transition-colors"
                         >
-                          <Send className="w-4 h-4" />
+                          {chatLoading ? (
+                            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                          ) : (
+                            <Send className="w-4 h-4" />
+                          )}
                         </button>
                       </div>
                     </div>

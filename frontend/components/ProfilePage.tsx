@@ -36,7 +36,6 @@ import {
   query,
   where,
   onSnapshot,
-  orderBy,
   getDocs,
   doc,
   updateDoc,

@@ -87,6 +87,7 @@ export default function Home() {
         // Floating elements
         gsap.to('.floating', {
           y: -10,
+          x:-70,
           duration: 2,
           ease: 'power2.inOut',
           repeat: -1,
@@ -100,18 +101,15 @@ export default function Home() {
   return (
     <div ref={containerRef} className="min-h-screen bg-white text-black">
       {/* Clean Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 nav-glass">
+      <nav className="fixed top-0 left-0 right-0 z-50 nav-glass z-[999]">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
               <Zap className="w-5 h-5 text-white" />
             </div>
-            <span className="text-2xl font-bold">Bombil</span>
+            <span className="text-2xl font-bold">REMO.ai</span>
           </div>
           <div className="hidden md:flex items-center space-x-8">
-            <Link href="#features" className="nav-item text-gray-700 hover:text-black transition-colors font-medium">Features</Link>
-            <Link href="#testimonials" className="nav-item text-gray-700 hover:text-black transition-colors font-medium">Testimonials</Link>
-            <Link href="#pricing" className="nav-item text-gray-700 hover:text-black transition-colors font-medium">Pricing</Link>
             <Link href="/auth" className="btn-primary nav-item">
             Get Started
           </Link>
@@ -136,17 +134,12 @@ export default function Home() {
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-gray-300/20 rounded-full"></div>
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto">
+        <div className="relative max-w-7xl mx-auto ">
           {/* Centered Hero Content */}
           <div className="text-center space-y-12">
             {/* Award Badge */}
-            <div className="hero-text inline-flex items-center gap-3 bg-black text-white px-6 py-3 rounded-full text-sm font-semibold">
-              <Star className="w-4 h-4 fill-current text-yellow-400" />
-              Award-Winning Productivity Platform 2024
-            </div>
-
             {/* Main Headlines */}
-            <div className="space-y-8">
+            <div className="space-y-8 ">
               <h1 className="hero-text text-7xl lg:text-8xl xl:text-9xl font-black leading-[0.85] tracking-tight">
                 <span className="block text-black relative">
                   THINK
@@ -414,33 +407,13 @@ export default function Home() {
             Ready to Transform Your Productivity?
           </h2>
           <p className="text-xl lg:text-2xl mb-12 text-gray-600 leading-relaxed max-w-3xl mx-auto">
-            Join over 10,000 professionals who have revolutionized their workflow with Bombil's AI-powered task management.
+            Join over 4 professionals who have revolutionized their workflow with REMO.ai's AI-powered task management.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
             <Link href="/auth" className="btn-primary text-lg px-10 py-5 rounded-lg flex items-center gap-3 group">
-              Start Free Trial
-              <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+              Begin The Journey
           </Link>
-            <button className="btn-secondary text-lg px-10 py-5 rounded-lg flex items-center gap-3 group">
-              <Play className="w-6 h-6 group-hover:scale-110 transition-transform" />
-              Watch Demo
-            </button>
-          </div>
-
-          <div className="flex flex-wrap justify-center items-center gap-8 text-gray-600">
-            <div className="flex items-center gap-2">
-              <CheckCircle className="w-5 h-5 text-black" />
-              <span>14-day free trial</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle className="w-5 h-5 text-black" />
-              <span>No credit card required</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle className="w-5 h-5 text-black" />
-              <span>Cancel anytime</span>
-            </div>
           </div>
         </div>
       </section>
@@ -454,7 +427,7 @@ export default function Home() {
                 <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center">
                   <Zap className="w-6 h-6 text-black" />
                 </div>
-                <span className="text-3xl font-bold">Bombil</span>
+                <span className="text-3xl font-bold">REMO.ai</span>
               </div>
               <p className="text-gray-400 text-lg leading-relaxed mb-8 max-w-md">
                 The future of productivity is here. Transform your workflow with AI-powered task management and intelligent automation.
@@ -494,7 +467,7 @@ export default function Home() {
 
           <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 mb-4 md:mb-0">
-              &copy; {new Date().getFullYear()} Bombil. All rights reserved.
+              &copy; {new Date().getFullYear()} REMO.ai. All rights reserved.
             </p>
             <div className="flex space-x-6">
               <Link href="#" className="text-gray-400 hover:text-white transition-colors">Privacy Policy</Link>

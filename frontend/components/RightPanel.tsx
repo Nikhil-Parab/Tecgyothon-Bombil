@@ -329,7 +329,7 @@ export default function RightPanel({
               <div>
                 <h3 className="font-bold text-white text-lg tracking-tight">AI Assistant</h3>
                 <div className="flex items-center gap-2">
-                  <p className="text-white/60 text-xs">Powered by Bombil AI</p>
+                  <p className="text-white/60 text-xs">Powered by REMO.ai AI</p>
                   <div className="flex items-center gap-1">
                     <div className={`w-2 h-2 rounded-full ${
                       backendConnected === null ? 'bg-yellow-400 animate-pulse' :
