@@ -21,9 +21,11 @@ export interface ChatMessage {
   isUser: boolean;
   timestamp: Date;
   metadata?: {
-    type?: 'roadmap' | 'summary' | 'task-creation' | 'general' | 'error';
+    type?: 'roadmap' | 'summary' | 'task-creation' | 'general' | 'error' | 'roadmap_success';
     relatedTaskIds?: string[];
     data?: any;
+    roadmapData?: any;
+    text?: string;
     // Backend response metadata
     isBackendResponse?: boolean;
     confidence?: number;
@@ -45,8 +47,9 @@ export interface Roadmap {
   title: string;
   description: string;
   phases: RoadmapPhase[];
-  createdAt: Date;
+  createdAt: Date | Timestamp;
   createdBy: 'ai' | 'user';
+  status?: string;
 }
 
 export interface Summary {
@@ -209,7 +212,7 @@ export async function createTask(taskData: Omit<Task, 'id' | 'createdAt' | 'upda
           tasks: Array.isArray(phase.tasks) ? phase.tasks : [],
           status: phase.status || 'pending'
         })) : [],
-        createdAt: Timestamp.fromDate(rm.createdAt || new Date()),
+        createdAt: rm.createdAt instanceof Date ? Timestamp.fromDate(rm.createdAt) : (rm.createdAt || Timestamp.now()),
         createdBy: rm.createdBy || 'user',
         status: rm.status || 'pending'
       })) : [],
@@ -273,7 +276,7 @@ export async function updateTask(userId: string, taskId: string, updates: Partia
         text: msg.text || (msg.metadata?.text || ''),
         isUser: typeof msg.isUser === 'boolean' ? msg.isUser : true,
         timestamp: msg.timestamp instanceof Date ? Timestamp.fromDate(msg.timestamp) : 
-                  (msg.timestamp?.toDate ? msg.timestamp : Timestamp.now()),
+                  (msg.timestamp || Timestamp.now()),
         metadata: msg.metadata || { type: 'general' }
       })) : [];
     }
@@ -291,7 +294,7 @@ export async function updateTask(userId: string, taskId: string, updates: Partia
           status: phase.status || 'pending'
         })) : [],
         createdAt: rm.createdAt instanceof Date ? Timestamp.fromDate(rm.createdAt) : 
-                  (rm.createdAt?.toDate ? rm.createdAt : Timestamp.now()),
+                  (rm.createdAt || Timestamp.now()),
         createdBy: rm.createdBy || 'user',
         status: rm.status || 'pending'
       })) : [];
@@ -305,7 +308,7 @@ export async function updateTask(userId: string, taskId: string, updates: Partia
         type: sum.type || 'project',
         taskIds: Array.isArray(sum.taskIds) ? sum.taskIds : [],
         createdAt: sum.createdAt instanceof Date ? Timestamp.fromDate(sum.createdAt) : 
-                  (sum.createdAt?.toDate ? sum.createdAt : Timestamp.now())
+                  (sum.createdAt || Timestamp.now())
       })) : [];
     }
 

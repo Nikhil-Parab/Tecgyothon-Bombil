@@ -11,8 +11,21 @@ from firebase_admin import credentials, firestore
 from datetime import datetime, timedelta
 import json
 import re
+import imaplib
+import email
+from email.header import decode_header
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from dotenv import load_dotenv
 
 warnings.filterwarnings('ignore')
+
+load_dotenv()
+
+# Gmail Configuration
+GMAIL_ADDRESS = os.getenv("GMAIL_ADDRESS", "omdeeborkar@gmail.com")
+GMAIL_APP_PASSWORD = os.getenv("GMAIL_APP_PASSWORD", "onpi xlgs kcrh msbl")
 
 # -----------------------
 # CONFIGURATION
@@ -44,7 +57,7 @@ ACTIONABLE_INTENTS = {
 # Intents that should NOT trigger knowledge search
 NO_SEARCH_INTENTS = {
     "create_task", "add_event", "schedule_meeting", "create_reminder", 
-    "set_alert", "update_event", "set_priority"
+    "set_alert", "update_event", "set_priority", "gmail_action", "draft_email"
 }
 
 # Informational intents that should prioritize knowledge search
@@ -68,7 +81,7 @@ def init_firebase():
     """Initialize Firebase Admin SDK"""
     try:
         if not firebase_admin._apps:
-            cred = credentials.Certificate("remo-6afe2-firebase-adminsdk-fbsvc-0e331a5e1e.json")
+            cred = credentials.Certificate("remo-sdk.json")
             firebase_admin.initialize_app(cred)
         return firestore.client()
     except Exception as e:
@@ -452,6 +465,388 @@ def create_firebase_reminder(query: str, user_id: str = "dPYFilBStodR8Q8IwBXv8Cy
         return {"status": "failed", "error": str(e)}
 
 
+def extract_roadmap_details(query: str) -> Dict:
+    """Extract roadmap details from query"""
+    query_lower = query.lower()
+    
+    # Extract project type
+    project_type = "general"
+    if any(keyword in query_lower for keyword in ['web', 'website', 'webapp']):
+        project_type = "web_development"
+    elif any(keyword in query_lower for keyword in ['mobile', 'app', 'ios', 'android']):
+        project_type = "mobile_development"
+    elif any(keyword in query_lower for keyword in ['ai', 'ml', 'machine learning', 'data science']):
+        project_type = "ai_project"
+    elif any(keyword in query_lower for keyword in ['startup', 'business', 'company']):
+        project_type = "startup"
+    
+    # Extract timeline
+    timeline_months = 6  # default
+    timeline_pattern = r'(\d+)\s*(month|months|week|weeks)'
+    match = re.search(timeline_pattern, query_lower)
+    if match:
+        duration = int(match.group(1))
+        unit = match.group(2)
+        if 'week' in unit:
+            timeline_months = max(1, duration // 4)
+        else:
+            timeline_months = duration
+    
+    # Extract budget
+    budget = None
+    budget_pattern = r'\$?([\d,]+)(?:k|000)?'
+    match = re.search(budget_pattern, query)
+    if match:
+        budget = match.group(1).replace(',', '')
+        if 'k' in query_lower:
+            budget = int(budget) * 1000
+        else:
+            budget = int(budget)
+    
+    return {
+        "title": f"{project_type.replace('_', ' ').title()} Project",
+        "description": f"AI-generated roadmap for {query}",
+        "project_type": project_type,
+        "timeline_months": timeline_months,
+        "budget": budget,
+        "phases": []
+    }
+
+# -----------------------
+# GMAIL OPERATIONS
+# -----------------------
+def fetch_gmail(limit=10):
+    """Fetch the latest N emails from Gmail inbox."""
+    try:
+        mail = imaplib.IMAP4_SSL("imap.gmail.com")
+        mail.login(GMAIL_ADDRESS, GMAIL_APP_PASSWORD)
+        mail.select("inbox")
+
+        status, messages = mail.search(None, "ALL")
+        if status != "OK":
+            return []
+
+        email_ids = messages[0].split()[-limit:]
+        emails_data = []
+
+        for num in email_ids:
+            _, data = mail.fetch(num, "(RFC822)")
+            raw_email = data[0][1]
+            msg = email.message_from_bytes(raw_email)
+
+            # Decode subject
+            subject, encoding = decode_header(msg["Subject"])[0]
+            if isinstance(subject, bytes):
+                subject = subject.decode(encoding or "utf-8", errors="ignore")
+
+            from_ = msg.get("From", "")
+            date_ = msg.get("Date", "")
+
+            # Extract plain text body
+            body = ""
+            if msg.is_multipart():
+                for part in msg.walk():
+                    content_type = part.get_content_type()
+                    content_disposition = str(part.get("Content-Disposition"))
+                    if content_type == "text/plain" and "attachment" not in content_disposition:
+                        try:
+                            body = part.get_payload(decode=True).decode()
+                            break
+                        except Exception:
+                            continue
+            else:
+                try:
+                    body = msg.get_payload(decode=True).decode(errors="ignore")
+                except Exception:
+                    body = str(msg.get_payload())
+
+            # Clean up text
+            body = re.sub(r"\r|\n+", " ", body)
+            body = re.sub(r"http\S+", "", body)
+            body = re.sub(r"={2,}", "", body)
+            body = re.sub(r"\s+", " ", body).strip()
+
+            emails_data.append({
+                "from": from_,
+                "subject": subject,
+                "body": body[:1000],
+                "date": date_
+            })
+
+        mail.close()
+        mail.logout()
+        return emails_data
+
+    except Exception as e:
+        print(f"❌ Error fetching Gmail: {e}")
+        return []
+
+
+def extract_email_address(text: str) -> Optional[str]:
+    """Extract email address from text"""
+    email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+    match = re.search(email_pattern, text)
+    return match.group(0) if match else None
+
+
+def extract_email_content(query: str) -> Dict:
+    """Extract recipient, subject, and body from query"""
+    query_lower = query.lower()
+    
+    # Extract recipient email
+    recipient = extract_email_address(query)
+    
+    # Extract subject
+    subject = ""
+    subject_patterns = [
+        r'subject[:\s]+([^,]+?)(?:\s+about|\s+regarding|\s+body|$)',
+        r'with subject[:\s]+([^,]+?)(?:\s+about|\s+regarding|\s+body|$)',
+    ]
+    
+    for pattern in subject_patterns:
+        match = re.search(pattern, query, re.IGNORECASE)
+        if match:
+            subject = match.group(1).strip()
+            break
+    
+    # Extract body/message
+    body = ""
+    body_patterns = [
+        r'(?:body|message|saying|content)[:\s]+(.+)',
+        r'(?:about|regarding)[:\s]+(.+)',
+    ]
+    
+    for pattern in body_patterns:
+        match = re.search(pattern, query, re.IGNORECASE)
+        if match:
+            body = match.group(1).strip()
+            # Remove subject if it was included in body
+            if subject:
+                body = body.replace(subject, "").strip()
+            break
+    
+    # If no explicit body, use the query after removing other parts
+    if not body:
+        body = query
+        # Remove common phrases
+        remove_phrases = [
+            r'send\s+(?:an?\s+)?email\s+to\s+\S+@\S+',
+            r'draft\s+(?:an?\s+)?email\s+to\s+\S+@\S+',
+            r'with\s+subject[:\s]+[^,]+',
+            r'subject[:\s]+[^,]+',
+        ]
+        for phrase in remove_phrases:
+            body = re.sub(phrase, '', body, flags=re.IGNORECASE)
+        body = re.sub(r'\s+', ' ', body).strip()
+    
+    if not subject:
+        subject = "Message from AI Assistant"
+    
+    return {
+        "recipient": recipient,
+        "subject": subject,
+        "body": body
+    }
+
+
+def generate_email_summary(text: str, max_length: int = 150) -> str:
+    """Generate a summary of email text using BART"""
+    try:
+        if not intent_classifier:  # Reuse the BART model
+            return text[:max_length]
+        
+        # Use a simple summarization approach
+        # For better results, you could load a separate summarization model
+        sentences = re.split(r'[.!?]+', text)
+        sentences = [s.strip() for s in sentences if len(s.strip()) > 10]
+        
+        # Take first few sentences as summary
+        summary = '. '.join(sentences[:3])
+        if len(summary) > max_length:
+            summary = summary[:max_length] + "..."
+        
+        return summary
+    except Exception as e:
+        print(f"⚠ Summarization error: {e}")
+        return text[:max_length]
+
+
+def send_gmail(to_email: str, subject: str, body: str, reply_to: Optional[str] = None):
+    """Send an email via Gmail"""
+    try:
+        msg = MIMEMultipart()
+        msg["From"] = GMAIL_ADDRESS
+        msg["To"] = to_email
+        msg["Subject"] = subject
+        
+        if reply_to:
+            msg["In-Reply-To"] = reply_to
+            msg["References"] = reply_to
+        
+        msg.attach(MIMEText(body, "plain"))
+
+        server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
+        server.login(GMAIL_ADDRESS, GMAIL_APP_PASSWORD)
+        server.send_message(msg)
+        server.quit()
+        
+        return {
+            "status": "success",
+            "recipient": to_email,
+            "subject": subject
+        }
+    except Exception as e:
+        return {
+            "status": "failed",
+            "error": str(e)
+        }
+
+
+def handle_gmail_action(query: str) -> Dict:
+    """Handle Gmail-related actions: reply, draft, or send"""
+    query_lower = query.lower()
+    
+    # Check if it's a reply action
+    if any(word in query_lower for word in ["reply", "respond to"]):
+        # Fetch recent emails
+        emails = fetch_gmail(limit=5)
+        if not emails:
+            return {"status": "failed", "error": "No emails found to reply to"}
+        
+        # Find the most relevant email to reply to
+        # Look for keywords in the query
+        best_match = None
+        for email_data in emails:
+            if any(keyword in query_lower for keyword in [
+                email_data['subject'].lower()[:20],
+                email_data['from'].lower()
+            ]):
+                best_match = email_data
+                break
+        
+        if not best_match:
+            best_match = emails[0]  # Reply to most recent
+        
+        # Generate reply content
+        reply_subject = f"Re: {best_match['subject']}"
+        
+        # Extract reply message from query
+        reply_body = query
+        for phrase in ["reply to", "respond to", "reply", "with", "saying"]:
+            reply_body = re.sub(phrase, '', reply_body, flags=re.IGNORECASE)
+        reply_body = re.sub(r'\s+', ' ', reply_body).strip()
+        
+        if not reply_body or len(reply_body) < 10:
+            # Generate automated reply
+            summary = generate_email_summary(best_match['body'])
+            reply_body = (
+                f"Thank you for your email regarding '{best_match['subject']}'.\n\n"
+                f"I've received your message: {summary}\n\n"
+                f"This is an automated acknowledgment. I'll get back to you soon.\n\n"
+                f"Best regards"
+            )
+        
+        # Extract sender email
+        sender_email = extract_email_address(best_match['from'])
+        if not sender_email:
+            return {"status": "failed", "error": "Could not extract sender email"}
+        
+        result = send_gmail(sender_email, reply_subject, reply_body)
+        result["action"] = "reply"
+        result["original_subject"] = best_match['subject']
+        return result
+    
+    # Otherwise, it's a draft/send action
+    else:
+        email_details = extract_email_content(query)
+        
+        if not email_details['recipient']:
+            return {
+                "status": "failed",
+                "error": "No recipient email address found in query"
+            }
+        
+        # Check if we should draft or send
+        if "draft" in query_lower and "send" not in query_lower:
+            # Just return the draft
+            return {
+                "status": "drafted",
+                "action": "draft",
+                "recipient": email_details['recipient'],
+                "subject": email_details['subject'],
+                "body": email_details['body']
+            }
+        else:
+            # Send the email
+            result = send_gmail(
+                email_details['recipient'],
+                email_details['subject'],
+                email_details['body']
+            )
+            result["action"] = "send"
+            return result
+
+
+def create_firebase_roadmap(query: str, user_id: str = "dPYFilBStodR8Q8IwBXv8CyWHLB2"):
+    """Create roadmap in Firebase"""
+    if not db:
+        return {"status": "failed", "error": "Firebase not initialized"}
+    
+    try:
+        roadmap_details = extract_roadmap_details(query)
+        roadmap_id = f"roadmap_{datetime.now().strftime('%Y%m%d%H%M%S')}"
+        current_time = datetime.now()
+        
+        # Generate basic phases based on project type
+        phases = []
+        if roadmap_details["project_type"] == "web_development":
+            phases = [
+                {"name": "Planning & Research", "duration": "2 weeks", "description": "Requirements gathering and technical planning"},
+                {"name": "Design & Architecture", "duration": "3 weeks", "description": "UI/UX design and system architecture"},
+                {"name": "Development", "duration": "8 weeks", "description": "Core development and feature implementation"},
+                {"name": "Testing & Deployment", "duration": "3 weeks", "description": "Testing, optimization, and deployment"}
+            ]
+        elif roadmap_details["project_type"] == "mobile_development":
+            phases = [
+                {"name": "Planning & Design", "duration": "3 weeks", "description": "App concept and UI/UX design"},
+                {"name": "Development", "duration": "10 weeks", "description": "Core app development"},
+                {"name": "Testing & Launch", "duration": "3 weeks", "description": "Testing and app store deployment"}
+            ]
+        else:
+            phases = [
+                {"name": "Planning", "duration": "2 weeks", "description": "Project planning and requirements"},
+                {"name": "Implementation", "duration": "8 weeks", "description": "Core implementation phase"},
+                {"name": "Review & Launch", "duration": "2 weeks", "description": "Final review and launch"}
+            ]
+        
+        roadmap_data = {
+            "title": roadmap_details["title"],
+            "description": roadmap_details["description"],
+            "projectType": roadmap_details["project_type"],
+            "timelineMonths": roadmap_details["timeline_months"],
+            "budget": roadmap_details["budget"],
+            "phases": phases,
+            "createdAt": current_time,
+            "updatedAt": current_time,
+            "status": "active",
+            "createdBy": "ai",
+            "tags": ["ai-generated", roadmap_details["project_type"]]
+        }
+        
+        doc_ref = db.collection('users').document(user_id).collection('roadmaps').document(roadmap_id)
+        doc_ref.set(roadmap_data)
+        
+        return {
+            "status": "success",
+            "roadmap_id": roadmap_id,
+            "title": roadmap_details["title"],
+            "phases": len(phases),
+            "timeline": f"{roadmap_details['timeline_months']} months"
+        }
+    except Exception as e:
+        return {"status": "failed", "error": str(e)}
+
+
 # -----------------------
 # CORE FUNCTIONS
 # -----------------------
@@ -656,6 +1051,10 @@ def execute_intents(query: str, structured_intents: Dict, intent_scores: Dict) -
                 result = create_firebase_reminder(query)
                 executed.append({"intent": intent, "status": result["status"], "details": result})
             
+            elif intent in ["gmail_action", "draft_email"]:
+                result = handle_gmail_action(query)
+                executed.append({"intent": intent, "status": result["status"], "details": result})
+            
             else:
                 executed.append({"intent": intent, "status": "not_implemented"})
     
@@ -697,6 +1096,15 @@ def format_response(response_text: str, intents_detected: List[Dict], intents_ex
                         output.append(f"    - ID: {details['event_id']}")
                     elif 'reminder_id' in details:
                         output.append(f"    - ID: {details['reminder_id']}")
+                    elif 'recipient' in details:
+                        # Gmail action
+                        output.append(f"    - Action: {details.get('action', 'email')}")
+                        output.append(f"    - Recipient: {details['recipient']}")
+                        output.append(f"    - Subject: {details['subject']}")
+                        if details['status'] == 'drafted':
+                            output.append(f"    - Body: {details['body'][:100]}...")
+                        if 'original_subject' in details:
+                            output.append(f"    - Original: {details['original_subject']}")
             elif item['status'] == 'failed':
                 output.append(f"  ✗ {item['intent']}: {item['status']}")
                 if 'details' in item and 'error' in item['details']:
@@ -795,4 +1203,4 @@ if __name__ == "__main__":
             print(f"\n❌ Error: {e}")
             import traceback
             traceback.print_exc()
-            continue
+        continue

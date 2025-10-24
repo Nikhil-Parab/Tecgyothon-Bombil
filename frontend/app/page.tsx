@@ -126,302 +126,286 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="hero-bg relative min-h-screen flex items-center justify-center pt-20 px-6 overflow-hidden">
-        <div className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
-          {/* Hero Content */}
-          <div className="space-y-8">
-            <div className="space-y-6">
-              <h1 className="hero-text text-6xl lg:text-7xl font-bold leading-tight">
-                <span className="text-black">Boost Your</span><br />
-                <span className="text-gray-600">Productivity</span><br />
-                <span className="text-black">with AI</span>
+      {/* Award-Winning Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center pt-20 px-6 overflow-hidden bg-white">
+        {/* Geometric Background Elements */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute top-20 left-20 w-96 h-96 bg-black/5 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-20 w-80 h-80 bg-gray-900/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-gray-200/30 rounded-full"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-gray-300/20 rounded-full"></div>
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto">
+          {/* Centered Hero Content */}
+          <div className="text-center space-y-12">
+            {/* Award Badge */}
+            <div className="hero-text inline-flex items-center gap-3 bg-black text-white px-6 py-3 rounded-full text-sm font-semibold">
+              <Star className="w-4 h-4 fill-current text-yellow-400" />
+              Award-Winning Productivity Platform 2024
+            </div>
+
+            {/* Main Headlines */}
+            <div className="space-y-8">
+              <h1 className="hero-text text-7xl lg:text-8xl xl:text-9xl font-black leading-[0.85] tracking-tight">
+                <span className="block text-black relative">
+                  THINK
+                  <div className="absolute -right-16 top-8 w-12 h-12 bg-black rounded-full flex items-center justify-center transform rotate-12">
+                    <Brain className="w-6 h-6 text-white" />
+                  </div>
+                </span>
+                <span className="block text-gray-400 italic font-light">smarter</span>
+                <span className="block text-black relative">
+                  WORK
+                  <div className="absolute -left-16 top-4 w-16 h-2 bg-black rounded-full"></div>
+                </span>
+                <span className="block text-black">FASTER</span>
               </h1>
-              <p className="hero-subtext text-xl lg:text-2xl text-gray-600 leading-relaxed max-w-2xl">
-                Bombil revolutionizes task management with intelligent automation, 
-                contextual suggestions, and seamless workflow optimization.
+              
+              <p className="hero-subtext text-2xl lg:text-3xl text-gray-600 leading-relaxed max-w-4xl mx-auto font-light">
+                The world's first <span className="font-semibold text-black">AI-native workspace</span> that adapts to your mind, 
+                <br />amplifies your potential, and transforms how you create.
               </p>
             </div>
-            
-            <div className="hero-buttons flex flex-col sm:flex-row gap-4">
-              <Link href="/auth" className="btn-primary text-lg px-8 py-4 rounded-lg flex items-center justify-center gap-3 group">
-                Start Free Trial
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+
+            {/* CTA Buttons */}
+            <div className="hero-buttons flex flex-col sm:flex-row gap-6 justify-center items-center">
+              <Link href="/auth" className="group relative overflow-hidden bg-black text-white px-12 py-6 rounded-2xl text-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                <span className="relative z-10 flex items-center gap-3">
+                  Start Your Journey
+                  <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+                </span>
+                <div className="absolute inset-0 bg-gray-800 opacity-0 group-hover:opacity-100 transition-opacity"></div>
               </Link>
-              <button className="btn-secondary text-lg px-8 py-4 rounded-lg flex items-center justify-center gap-3 group">
-                <Play className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                Watch Demo
+              
+              <button className="group flex items-center gap-4 text-xl font-semibold text-black hover:text-gray-800 transition-colors">
+                <div className="w-16 h-16 bg-white border-2 border-black rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+                  <Play className="w-6 h-6 ml-1" fill="currentColor" />
+                </div>
+                Watch Experience
               </button>
             </div>
 
-            {/* Stats */}
-            <div className="flex flex-wrap gap-8 pt-8">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-black">10K+</div>
-                <div className="text-gray-600">Active Users</div>
+            {/* Trust Indicators */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-16 max-w-4xl mx-auto">
+              <div className="text-center group">
+                <div className="text-5xl font-black text-black group-hover:scale-110 transition-transform">50K+</div>
+                <div className="text-gray-600 font-medium">Creative Professionals</div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-black">99.9%</div>
-                <div className="text-gray-600">Uptime</div>
+              <div className="text-center group">
+                <div className="text-5xl font-black text-black group-hover:scale-110 transition-transform">99.9%</div>
+                <div className="text-gray-600 font-medium">Uptime SLA</div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-black">4.9★</div>
-                <div className="text-gray-600">Rating</div>
+              <div className="text-center group">
+                <div className="text-5xl font-black text-black group-hover:scale-110 transition-transform">4.9★</div>
+                <div className="text-gray-600 font-medium">User Rating</div>
+              </div>
+              <div className="text-center group">
+                <div className="text-5xl font-black text-black group-hover:scale-110 transition-transform">24/7</div>
+                <div className="text-gray-600 font-medium">AI Assistant</div>
               </div>
             </div>
           </div>
 
-          {/* Hero Visual */}
-          <div className="hero-image relative">
-            <div className="relative z-10">
-              {/* Main Dashboard Card */}
-              <div className="card bg-black text-white p-8 rounded-2xl shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-500">
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-2xl font-bold text-white">Smart Dashboard</h3>
-                  <div className="flex space-x-2">
-                    <div className="w-3 h-3 bg-white/30 rounded-full"></div>
-                    <div className="w-3 h-3 bg-white/30 rounded-full"></div>
-                    <div className="w-3 h-3 bg-white rounded-full"></div>
-                  </div>
+          {/* Floating Interface Elements */}
+          <div className="absolute top-1/4 left-8 lg:left-20 floating">
+            <div className="bg-white rounded-3xl p-8 shadow-2xl border border-gray-200 max-w-sm">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-16 h-16 bg-black rounded-2xl flex items-center justify-center">
+                  <Brain className="w-8 h-8 text-white" />
                 </div>
-                
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3 p-3 bg-white/10 rounded-xl">
-                    <CheckCircle className="w-6 h-6 text-green-400" />
-                    <span className="text-white font-medium">Complete project proposal</span>
-                    <div className="ml-auto w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  </div>
-                  
-                  <div className="flex items-center gap-3 p-3 bg-white/10 rounded-xl">
-                    <Clock className="w-6 h-6 text-yellow-400" />
-                    <span className="text-white font-medium">Review team metrics</span>
-                    <div className="ml-auto w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
-                  </div>
-                  
-                  <div className="flex items-center gap-3 p-3 bg-white/10 rounded-xl">
-                    <Calendar className="w-6 h-6 text-blue-400" />
-                    <span className="text-white font-medium">Schedule client meeting</span>
-                    <div className="ml-auto w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-                  </div>
+                <div>
+                  <h4 className="font-bold text-xl text-black">AI Insights</h4>
+                  <p className="text-gray-600">Real-time analysis</p>
                 </div>
               </div>
-
-              {/* Floating Cards */}
-              <div className="absolute -top-4 -right-4 floating">
-                <div className="card p-6 rounded-2xl shadow-xl bg-white">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-black rounded-xl flex items-center justify-center">
-                      <Brain className="w-6 h-6 text-white" />
-                    </div>
-          <div>
-                      <div className="font-bold text-black">AI Insights</div>
-                      <div className="text-sm text-gray-600">3 suggestions</div>
-                    </div>
-                  </div>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                  <span className="font-medium text-gray-800">Focus time: 94%</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
+                  <span className="font-medium text-gray-800">Productivity: +23%</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-3 h-3 bg-purple-500 rounded-full animate-pulse"></div>
+                  <span className="font-medium text-gray-800">Flow state: Active</span>
+                </div>
+              </div>
             </div>
           </div>
 
-              <div className="absolute -bottom-4 -left-4 floating">
-                <div className="card p-6 rounded-2xl shadow-xl bg-white">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center">
-                      <Zap className="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                      <div className="font-bold text-black">Flow State</div>
-                      <div className="text-sm text-gray-600">Optimal</div>
+          <div className="absolute top-1/3 right-8 lg:right-20 floating" style={{ animationDelay: '2s' }}>
+            <div className="bg-black text-white rounded-3xl p-8 shadow-2xl max-w-sm">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center">
+                  <Zap className="w-8 h-8 text-black" />
                 </div>
+                <div>
+                  <h4 className="font-bold text-xl">Smart Automation</h4>
+                  <p className="text-gray-300">Tasks completed</p>
                 </div>
+              </div>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between bg-white/10 rounded-xl p-3">
+                  <span className="font-medium">Email sorting</span>
+                  <CheckCircle className="w-5 h-5 text-green-400" />
                 </div>
+                <div className="flex items-center justify-between bg-white/10 rounded-xl p-3">
+                  <span className="font-medium">Calendar sync</span>
+                  <CheckCircle className="w-5 h-5 text-green-400" />
+                </div>
+                <div className="flex items-center justify-between bg-white/10 rounded-xl p-3">
+                  <span className="font-medium">Task prioritization</span>
+                  <Clock className="w-5 h-5 text-yellow-400 animate-spin" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 floating" style={{ animationDelay: '4s' }}>
+            <div className="bg-white rounded-3xl p-6 shadow-2xl border border-gray-300">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 bg-black rounded-xl flex items-center justify-center">
+                  <Users className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h5 className="font-bold text-black">Team Sync</h5>
+                  <p className="text-sm text-gray-600">5 members active</p>
+                </div>
+              </div>
+              <div className="flex -space-x-3">
+                <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center text-white text-xs font-bold">A</div>
+                <div className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center text-white text-xs font-bold">B</div>
+                <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-white text-xs font-bold">C</div>
+                <div className="w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center text-white text-xs font-bold">+2</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" className="py-32 px-6 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <h2 className="text-5xl lg:text-6xl font-bold mb-6 text-black">
-              Powerful Features
+      {/* Revolutionary Features Section */}
+      <section id="features" className="relative py-40 px-6 bg-black text-white overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0">
+          <div className="absolute top-20 left-20 w-96 h-96 bg-white/5 rounded-full blur-3xl bg-morph"></div>
+          <div className="absolute bottom-20 right-20 w-80 h-80 bg-white/10 rounded-full blur-3xl bg-morph" style={{ animationDelay: '10s' }}></div>
+          <div className="absolute inset-0 opacity-10">
+            <div className="grid grid-cols-12 gap-4 h-full">
+              {Array.from({ length: 144 }).map((_, i) => (
+                <div key={i} className="border border-white/10"></div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto">
+          <div className="text-center mb-24">
+            <div className="inline-flex items-center gap-3 bg-white text-black px-6 py-3 rounded-full text-sm font-semibold mb-8">
+              <Zap className="w-4 h-4" />
+              Revolutionary Technology
+            </div>
+            <h2 className="text-6xl lg:text-7xl font-black mb-8 leading-tight">
+              <span className="block">FEATURES THAT</span>
+              <span className="block text-gray-400 italic font-light">redefine</span>
+              <span className="block">PRODUCTIVITY</span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Everything you need to transform your productivity and achieve your goals with intelligent automation.
+            <p className="text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed font-light">
+              Experience the future of work with AI-powered features that adapt to your mind, 
+              amplify your creativity, and transform your potential into results.
             </p>
           </div>
           
-          <div className="grid lg:grid-cols-3 gap-8 mb-20">
-            <div className="card group hover:scale-105 transition-all duration-500">
-              <div className="w-16 h-16 bg-black rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                <Brain className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold mb-4 text-black">AI-Powered Insights</h3>
-              <p className="text-gray-600 leading-relaxed mb-6">
-                Get intelligent suggestions based on your work patterns, priorities, and productivity data to optimize your workflow.
-              </p>
-              <div className="flex items-center text-black font-semibold group-hover:translate-x-2 transition-transform duration-300">
-                Learn more <ChevronRight className="w-4 h-4 ml-1" />
-              </div>
-            </div>
-
-            <div className="card group hover:scale-105 transition-all duration-500">
-              <div className="w-16 h-16 bg-gray-800 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                <Calendar className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold mb-4 text-black">Smart Scheduling</h3>
-              <p className="text-gray-600 leading-relaxed mb-6">
-                Seamlessly integrate with your calendar and automatically optimize your schedule for maximum productivity.
-              </p>
-              <div className="flex items-center text-black font-semibold group-hover:translate-x-2 transition-transform duration-300">
-                Learn more <ChevronRight className="w-4 h-4 ml-1" />
-              </div>
-            </div>
-
-            <div className="card group hover:scale-105 transition-all duration-500">
-              <div className="w-16 h-16 bg-gray-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                <Zap className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold mb-4 text-black">Flow State Optimization</h3>
-              <p className="text-gray-600 leading-relaxed mb-6">
-                Monitor and enhance your focus with real-time flow state tracking and personalized productivity recommendations.
-              </p>
-              <div className="flex items-center text-black font-semibold group-hover:translate-x-2 transition-transform duration-300">
-                Learn more <ChevronRight className="w-4 h-4 ml-1" />
-              </div>
-            </div>
-          </div>
-
-          {/* Additional Features Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="card text-center group">
-              <div className="w-12 h-12 bg-black rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <Shield className="w-6 h-6 text-white" />
-              </div>
-              <h4 className="font-bold text-black mb-2">Secure & Private</h4>
-              <p className="text-sm text-gray-600">Enterprise-grade security</p>
-            </div>
-
-            <div className="card text-center group">
-              <div className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <Users className="w-6 h-6 text-white" />
-              </div>
-              <h4 className="font-bold text-black mb-2">Team Collaboration</h4>
-              <p className="text-sm text-gray-600">Seamless team workflows</p>
-            </div>
-
-            <div className="card text-center group">
-              <div className="w-12 h-12 bg-gray-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <Clock className="w-6 h-6 text-white" />
-              </div>
-              <h4 className="font-bold text-black mb-2">Time Tracking</h4>
-              <p className="text-sm text-gray-600">Detailed analytics</p>
-            </div>
-
-            <div className="card text-center group">
-              <div className="w-12 h-12 bg-gray-400 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <Star className="w-6 h-6 text-white" />
-            </div>
-              <h4 className="font-bold text-black mb-2">Smart Goals</h4>
-              <p className="text-sm text-gray-600">Achieve more, faster</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section id="testimonials" className="py-32 px-6 bg-black text-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <h2 className="text-5xl lg:text-6xl font-bold mb-6 text-white">
-              Loved by Professionals
-            </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-              Join thousands of professionals who have transformed their productivity with Bombil.
-            </p>
-          </div>
-
-          <div className="grid lg:grid-cols-3 gap-8 mb-16">
-            <div className="card bg-gray-900 text-white group">
-              <div className="flex items-center mb-6">
-                <div className="flex text-yellow-400">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-current" />
-                  ))}
+          {/* Premium Feature Cards */}
+          <div className="grid lg:grid-cols-3 gap-12 mb-32">
+            <div className="group relative">
+              <div className="absolute inset-0 bg-white/5 rounded-3xl backdrop-blur-sm border border-white/10 group-hover:border-white/30 transition-all duration-500"></div>
+              <div className="relative p-12 text-center">
+                <div className="w-24 h-24 bg-white rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
+                  <Brain className="w-12 h-12 text-black" />
                 </div>
-              </div>
-              <p className="text-lg mb-6 leading-relaxed">
-                "Bombil has completely revolutionized how I manage my daily tasks. The AI-powered suggestions are incredibly accurate and have saved me hours every week."
-              </p>
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center">
-                  <span className="text-black font-bold text-lg">SJ</span>
-                </div>
-                <div>
-                  <p className="font-bold text-white">Sarah Johnson</p>
-                  <p className="text-gray-300">Product Manager at TechCorp</p>
+                <h3 className="text-3xl font-bold mb-6 text-white group-hover:text-gray-200 transition-colors">Neural Intelligence</h3>
+                <p className="text-xl text-gray-300 leading-relaxed mb-8 group-hover:text-gray-200 transition-colors">
+                  Advanced AI that learns your patterns, anticipates your needs, and evolves with your workflow for unprecedented productivity.
+                </p>
+                <div className="flex items-center justify-center text-white font-semibold group-hover:translate-x-2 transition-transform duration-300 text-lg">
+                  Explore Neural AI <ArrowRight className="w-5 h-5 ml-2" />
                 </div>
               </div>
             </div>
 
-            <div className="card bg-gray-900 text-white group">
-              <div className="flex items-center mb-6">
-                <div className="flex text-yellow-400">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-current" />
-                  ))}
+            <div className="group relative">
+              <div className="absolute inset-0 bg-white/5 rounded-3xl backdrop-blur-sm border border-white/10 group-hover:border-white/30 transition-all duration-500"></div>
+              <div className="relative p-12 text-center">
+                <div className="w-24 h-24 bg-white rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
+                  <Calendar className="w-12 h-12 text-black" />
                 </div>
-              </div>
-              <p className="text-lg mb-6 leading-relaxed">
-                "The flow state tracking feature is a game-changer. I've identified my most productive hours and optimized my entire schedule around them."
-              </p>
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center">
-                  <span className="text-black font-bold text-lg">MC</span>
-                </div>
-                <div>
-                  <p className="font-bold text-white">Michael Chen</p>
-                  <p className="text-gray-300">Senior Software Developer</p>
+                <h3 className="text-3xl font-bold mb-6 text-white group-hover:text-gray-200 transition-colors">Quantum Scheduling</h3>
+                <p className="text-xl text-gray-300 leading-relaxed mb-8 group-hover:text-gray-200 transition-colors">
+                  Multi-dimensional calendar optimization that considers energy levels, focus patterns, and peak performance windows.
+                </p>
+                <div className="flex items-center justify-center text-white font-semibold group-hover:translate-x-2 transition-transform duration-300 text-lg">
+                  Master Time <ArrowRight className="w-5 h-5 ml-2" />
                 </div>
               </div>
             </div>
 
-            <div className="card bg-gray-900 text-white group">
-              <div className="flex items-center mb-6">
-                <div className="flex text-yellow-400">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-current" />
-                  ))}
+            <div className="group relative">
+              <div className="absolute inset-0 bg-white/5 rounded-3xl backdrop-blur-sm border border-white/10 group-hover:border-white/30 transition-all duration-500"></div>
+              <div className="relative p-12 text-center">
+                <div className="w-24 h-24 bg-white rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
+                  <Zap className="w-12 h-12 text-black" />
                 </div>
-              </div>
-              <p className="text-lg mb-6 leading-relaxed">
-                "As a startup founder, time is everything. Bombil's smart scheduling and team collaboration features have been invaluable for our growth."
-              </p>
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center">
-                  <span className="text-black font-bold text-lg">AR</span>
-                </div>
-                <div>
-                  <p className="font-bold text-white">Alex Rodriguez</p>
-                  <p className="text-gray-300">Founder & CEO, InnovateLab</p>
+                <h3 className="text-3xl font-bold mb-6 text-white group-hover:text-gray-200 transition-colors">Flow Amplification</h3>
+                <p className="text-xl text-gray-300 leading-relaxed mb-8 group-hover:text-gray-200 transition-colors">
+                  Real-time flow state detection and enhancement with biometric feedback and environmental optimization.
+                </p>
+                <div className="flex items-center justify-center text-white font-semibold group-hover:translate-x-2 transition-transform duration-300 text-lg">
+                  Enter Flow <ArrowRight className="w-5 h-5 ml-2" />
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Trust Indicators */}
-          <div className="text-center">
-            <p className="text-gray-300 mb-8">Trusted by teams at</p>
-            <div className="flex flex-wrap justify-center items-center gap-12 opacity-60">
-              <div className="text-2xl font-bold text-white">Microsoft</div>
-              <div className="text-2xl font-bold text-white">Google</div>
-              <div className="text-2xl font-bold text-white">Amazon</div>
-              <div className="text-2xl font-bold text-white">Netflix</div>
-              <div className="text-2xl font-bold text-white">Spotify</div>
+          {/* Advanced Capabilities Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="text-center group">
+              <div className="w-20 h-20 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:bg-white/20 transition-all duration-300 border border-white/20">
+                <Shield className="w-10 h-10 text-white" />
+              </div>
+              <h4 className="font-bold text-white text-xl mb-3">Quantum Security</h4>
+              <p className="text-gray-300 leading-relaxed">Military-grade encryption with blockchain verification</p>
+            </div>
+
+            <div className="text-center group">
+              <div className="w-20 h-20 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:bg-white/20 transition-all duration-300 border border-white/20">
+                <Users className="w-10 h-10 text-white" />
+              </div>
+              <h4 className="font-bold text-white text-xl mb-3">Collective Intelligence</h4>
+              <p className="text-gray-300 leading-relaxed">AI-enhanced team synchronization and shared cognition</p>
+            </div>
+
+            <div className="text-center group">
+              <div className="w-20 h-20 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:bg-white/20 transition-all duration-300 border border-white/20">
+                <Clock className="w-10 h-10 text-white" />
+              </div>
+              <h4 className="font-bold text-white text-xl mb-3">Temporal Analytics</h4>
+              <p className="text-gray-300 leading-relaxed">Predictive time modeling with outcome forecasting</p>
+            </div>
+
+            <div className="text-center group">
+              <div className="w-20 h-20 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:bg-white/20 transition-all duration-300 border border-white/20">
+                <Star className="w-10 h-10 text-white" />
+              </div>
+              <h4 className="font-bold text-white text-xl mb-3">Achievement Engine</h4>
+              <p className="text-gray-300 leading-relaxed">Goal materialization through micro-optimization</p>
             </div>
           </div>
         </div>
       </section>
+
 
       {/* CTA Section */}
       <section className="py-32 px-6 bg-gray-100">
